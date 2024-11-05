@@ -5,9 +5,11 @@ import news from '../../data/movienews.json';
 
 const DetailsNews = () => {
     const { id } = useParams();
+    console.log("ID recebido:", id);  // Verifique o ID recebido
 
-    // Converter o ID para um número inteiro
-    const newsItem = news.movieNews.find(item => item.id === Number(id));
+    // Converter o ID para um número
+    const newsItem = news.movieNews.find(item => item.id === parseInt(id));
+    console.log("Item encontrado:", newsItem);  // Verifique o que foi encontrado
 
     if (!newsItem) {
         return <p>Notícia não encontrada.</p>;
@@ -17,7 +19,7 @@ const DetailsNews = () => {
         <div className="container">
             <div className="details-news">
                 <div className="poster">
-                    <img src={`./images/${newsItem.image.split('/').pop()}`} alt={newsItem.title} />
+                    <img src={newsItem.image} alt={newsItem.title} /> {/* Ajuste aqui */}
                 </div>
                 <h2>{newsItem.title}</h2>
                 <p>{newsItem.news}</p>
