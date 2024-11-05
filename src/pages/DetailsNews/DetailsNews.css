@@ -1,0 +1,17 @@
+.details-news .poster{
+    border: 1px solid #1b1b1b;
+    background: #292929;
+    padding: 0.2rem;
+    display: inline-grid;
+    width: 100%;
+}
+
+.details-news h2{
+    margin-block: 1.2rem;
+    font-weight: normal;
+}
+
+.details-news p{
+    line-height: 1.5;
+    color: #6d6d6d;
+}

@@ -1,0 +1,23 @@
+.promotion{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.promotion h2{
+    font-weight: normal;
+
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+.promotion p{
+    font-size: 0.85rem;
+}
+
+@media(max-width:1024px){
+    .promotion{
+        padding-inline: 1rem;
+    }
+}

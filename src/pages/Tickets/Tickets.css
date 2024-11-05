@@ -1,0 +1,29 @@
+.container-tickets .tickets{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 3rem;
+}
+
+.container-tickets .tickets > div{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.container-tickets .tickets svg{
+    font-size: 1.5rem;
+    margin-top: 0.2rem;
+    color: #990000;
+}
+
+.container-tickets .tickets .ticketPrice{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.container-tickets .tickets .ticketPrice span{
+    font-size: 0.75rem;
+}
+

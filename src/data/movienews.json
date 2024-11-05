@@ -1,0 +1,39 @@
+{
+    "movieNews": [
+        {
+            "id": 1,
+            "title": "'Top Gun: Maverick' se torna um Fenômeno Global!",
+            "data": "2024-11-02",
+            "image": "/images/news-topgun.jpg",
+            "news": "O filme 'Top Gun: Maverick' alcançou a impressionante marca de 13ª maior bilheteria mundial de todos os tempos! Desde sua estreia, o longa protagonizado por Tom Cruise conquistou fãs ao redor do mundo com cenas de ação emocionantes e uma história envolvente, que homenageia o clássico dos anos 80. Com essa conquista, 'Top Gun: Maverick' prova ser um verdadeiro fenômeno, ultrapassando bilhões em arrecadação e consolidando sua posição como um dos maiores sucessos da história do cinema."
+        },
+        {
+            "id": 2,
+            "title": "O que esperar do suspense 'Não! Não Olhe!'?",
+            "data": "2024-11-02",
+            "image": "/images/news-nao-olhe.jpg",
+            "news": "'Não! Não Olhe!' é o novo thriller intrigante de Jordan Peele que promete prender o público do início ao fim. A história gira em torno de eventos sobrenaturais que começam a assombrar uma pequena cidade, levando os personagens a confrontarem mistérios inexplicáveis e medos profundos. Com uma atmosfera tensa e reviravoltas inesperadas, o filme combina suspense, crítica social e elementos de terror psicológico. Prepare-se para surpresas e momentos de tirar o fôlego — 'Não! Não Olhe!' é uma experiência imperdível para os fãs do gênero!"
+        },
+        {
+            "id": 3,
+            "title": "Neve Campbell retorna para enfrentar Ghostface em 'Pânico 7'",
+            "data": "2024-11-02",
+            "image": "/images/news-panico.jpg",
+            "news": "Neve Campbell está de volta em 'Pânico 7' para encarar mais uma vez o icônico vilão Ghostface! Após anos como uma das final girls mais lendárias do cinema, sua personagem, Sidney Prescott, retorna com força total para enfrentar novos perigos e mistérios. Os fãs da franquia estão ansiosos para ver como Sidney lidará com essa nova ameaça e quais serão as surpresas e reviravoltas que aguardam a saga de terror. 'Pânico 7' promete entregar tensão e nostalgia, fazendo jus ao legado da série."
+        },
+        {
+            "id": 4,
+            "title": "Terceiro filme do Homem-Aranha promete quebrar recordes de bilheteria!",
+            "data": "2024-11-02",
+            "image": "/images/news-homem-aranha.jpg",
+            "news": "O aguardado terceiro filme do Homem-Aranha está prestes a balançar as bilheterias ao redor do mundo! Com grandes expectativas, o novo longa da Marvel traz de volta Tom Holland no papel do famoso herói e promete muitas surpresas para os fãs. Analistas acreditam que o filme tem potencial para superar recordes de arrecadação, impulsionado por cenas de ação épicas e possíveis participações especiais. O lançamento já está movimentando o público, e a aventura de Peter Parker deve conquistar novos patamares no universo cinematográfico."
+        },
+        {
+            "id": 5,
+            "title": "Jason Momoa revela sua paixão e contribuição criativa em 'Aquaman 2'",
+            "data": "2024-11-02",
+            "image": "/images/news-aquaman.jpg",
+            "news": "Jason Momoa compartilhou detalhes sobre sua dedicação e envolvimento criativo em 'Aquaman 2', prometendo um filme ainda mais empolgante e envolvente. O ator revelou que teve a oportunidade de colaborar no desenvolvimento do roteiro e nas ideias para o novo longa, mostrando todo o seu entusiasmo pelo personagem e pelo universo de Atlantis. Com cenas de ação grandiosas e uma história mais profunda, 'Aquaman 2' busca cativar tanto os novos fãs quanto os apaixonados pelo herói aquático da DC. Segundo Momoa, o público pode esperar momentos emocionantes e uma expansão épica do mundo submarino."
+        }
+    ]
+}

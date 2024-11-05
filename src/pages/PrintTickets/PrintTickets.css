@@ -1,0 +1,141 @@
+.print{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #1b1b1b;
+    border: 1px solid rgba(98, 98, 98, 0.2);
+    border-radius: 3px;
+    max-width: 380px;
+    margin: 3rem auto;
+}
+
+.print h2{
+    background: rgb(73 128 73);
+    width: 100%;
+    text-align: center;
+    border-radius: 3px 3px 0 0;
+    padding-block: 0.5rem;
+}
+
+.details{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2rem;
+    gap: 5px;
+    letter-spacing: 1px;
+}
+
+.details span span.seat{
+    background: rgb(73 128 73);
+    margin-right: 0.3rem;
+    color: #FFF;
+    font-size: 0.65rem;
+    padding: 0.2rem;
+}
+
+.details h1{
+    text-align: center; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.details h1 span{
+    background: #FFF;
+    padding: 0.3rem;
+    font-weight: normal;
+    color: #333;
+    border-radius: 3px;
+
+}
+
+.details h4{
+    margin-block: 0.5rem;
+    color: #637d87;
+}
+
+.details strong{
+    color: #FFF;
+    font-size: 0.75rem;
+}
+
+.details span{
+    font-size: 0.75rem;
+    color: #c2bdbd;
+}
+
+.details .type span{
+    margin:0 0.3rem;
+}
+
+.details .list-product{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.details .list-product .first{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.details .list-product .first > span{
+    padding: 0.5rem 0.7rem;
+    border: 1px solid rgba(98, 98, 98, 0.5);
+}
+
+.details .list-product div{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.details .list-product .desc{
+    font-size: 0.65rem;
+    letter-spacing: 0;
+}
+
+.details .codigoBarra{
+    margin-block: 1.2rem;
+    text-align: center;
+}
+
+.print-button{
+    background: transparent;
+    border: 0;
+}
+
+.print-button svg{
+    font-size: 2rem;
+    color: #FFF;
+    position: absolute;
+    right: 30px;
+    bottom: 80px;
+    cursor: pointer;
+}
+
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+   
+    .print, .print * {
+        visibility: visible;
+    }
+    .print {
+        position: absolute;
+        top: -100%;
+        left: 25%;
+        width: 100%;
+    }
+    .print-button {
+        display: none; 
+        
+    }
+}

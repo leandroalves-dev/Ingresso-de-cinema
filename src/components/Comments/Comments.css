@@ -1,0 +1,105 @@
+.comments{
+    position: relative;
+    width: 80%;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.qtda {
+    background: #990000;
+    border-radius: 25px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+    background: #181818;
+    margin-top: 1rem;
+    border-radius: 3px;
+}
+
+.carousel-comments{
+    display: flex;
+    transition: transform 0.5s ease;
+    width: 100%;
+    justify-content: center;
+    margin-top: 1.2rem;
+}
+
+.comment-item {
+    display: none;
+    flex: 0 0 100%;
+    padding: 1rem 2rem;
+}
+
+.comment-item .text{
+    display: flex;
+    align-items: center;  
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+
+.comment-item .text h4{
+    font-weight: normal;
+}
+
+.comment-item .text p{
+    font-size: 0.85rem;
+    color: #6d6d6d;
+}
+
+.comment-item .reviews{
+    margin: 2rem auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;   
+}
+
+.comment-item.active {
+    display: block;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 25%;
+    cursor: pointer;
+    border: 0;
+    background: none;
+    color: #FFF;
+}
+
+.carousel-btn.prev {
+    left: 15px;
+}
+
+.carousel-btn.next {
+    right: 15px;
+}
+
+.like svg{
+    color: rgb(3, 112, 3);
+}
+
+.no-like svg{
+    color: rgb(138, 6, 6);
+}
+
+@media(max-width:1020px){
+    .comments{
+        margin-top: 2.2rem;
+        width: 100%;
+    }
+}

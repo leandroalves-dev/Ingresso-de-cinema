@@ -1,0 +1,44 @@
+header{
+    background: #141414;
+    border-bottom: 5px solid #151515;
+}
+
+header .header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav ul{
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li a{
+    color: #FFF;
+    font-size: 1.2rem;
+}
+
+header .user{
+    padding: 0.8rem;
+    background: #121212;
+}
+
+header .user .grid-user{
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header .user .grid-user ul{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+header .user .grid-user ul li,
+header .user .grid-user ul li a{
+    font-size: 0.75rem;
+    cursor: pointer;
+}

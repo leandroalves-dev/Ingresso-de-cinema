@@ -1,0 +1,10 @@
+.grid-details .col-description .rating {
+    display: flex;
+    gap: 4px; 
+    color: gold;
+}
+
+.grid-details .col-description .rating svg{
+    font-size: 1rem;
+    margin: 0;
+}
