@@ -98,7 +98,7 @@ const Movies = () => {
                     <div className="itens">
                         <div className="grid-itens">
                             <div className="poster">
-                                <Link to={`/details/${movie.id}`} state={{ movie }}><img src={`/${movie.image}`} title={movie.title} alt={movie.title} /></Link>
+                                <Link to={`/details/${movie.id}`} state={{ movie }}><img src={`${movie.image}`} title={movie.title} alt={movie.title} /></Link>
                             </div>
                             <div className="information">
                                 <h2>{movie.title}</h2>
