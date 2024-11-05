@@ -1,12 +1,15 @@
 /* eslint-disable no-undef */
 import './News.css';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 // json
 import news from '../../data/movienews.json';       
 
 const News = () => {
+
+    const location = useLocation();
+    const imagePrefix = location.pathname === '/' ? './' : '../';
 
     return (
         <article className='container-news'>
@@ -18,7 +21,7 @@ const News = () => {
                     
                     {news.movieNews.map((news, index) => (
                         <div className="news" key={index}>
-                            <img src={`${news.image}`} alt={news.title} title={news.title}  />
+                            <img src={`${imagePrefix}/${newsItem.image.split('/').pop()}`} alt={news.title} title={news.title}  />
                             <Link to={`/details-news/${news.id}`}>{news.title}</Link>
                             <span className='data'>{news.data}</span>
                         </div>
