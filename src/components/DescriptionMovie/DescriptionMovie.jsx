@@ -17,7 +17,7 @@ const DescriptionMovie = ({ onHandleVideo }) => {
     return (
         <div className="grid-details">
             <div className="col-poster">
-                <img src={`../${movie.image}`} alt="" />
+                <img src={movie.image} alt="" />
             </div>
             <div className="col-description">
                 <h1>{movie.title}</h1>
