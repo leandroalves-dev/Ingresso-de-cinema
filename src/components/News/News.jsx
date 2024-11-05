@@ -21,7 +21,7 @@ const News = () => {
                     
                     {news.movieNews.map((newsItem, index) => (
                         <div className="news" key={index}>
-                            <img src={`${imagePrefix}/${newsItem.image.split('/').pop()}`} alt={newsItem.title} title={newsItem.title}  />
+                            <img src={`${imagePrefix}images/${newsItem.image.split('/').pop()}`} alt={newsItem.title} title={newsItem.title}  />
                             <Link to={`/details-news/${news.id}`}>{newsItem.title}</Link>
                             <span className='data'>{newsItem.data}</span>
                         </div>
