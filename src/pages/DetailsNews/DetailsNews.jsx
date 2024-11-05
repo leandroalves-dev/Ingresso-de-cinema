@@ -17,7 +17,7 @@ const DetailsNews = () => {
         <div className="container">
             <div className="details-news">
                 <div className="poster">
-                    <img src={`${newsItem.image}`} />
+                    <img src={`.${newsItem.image}`} />
                 </div>
                 <h2>{newsItem.title}</h2>
                 <p>{newsItem.news}</p>
