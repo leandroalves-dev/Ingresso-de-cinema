@@ -19,11 +19,11 @@ const News = () => {
 
                 <div className="grid-news">
                     
-                    {news.movieNews.map((news, index) => (
+                    {news.movieNews.map((newsItem, index) => (
                         <div className="news" key={index}>
-                            <img src={`${imagePrefix}/${newsItem.image.split('/').pop()}`} alt={news.title} title={news.title}  />
-                            <Link to={`/details-news/${news.id}`}>{news.title}</Link>
-                            <span className='data'>{news.data}</span>
+                            <img src={`${imagePrefix}/${newsItem.image.split('/').pop()}`} alt={newsItem.title} title={newsItem.title}  />
+                            <Link to={`/details-news/${news.id}`}>{newsItem.title}</Link>
+                            <span className='data'>{newsItem.data}</span>
                         </div>
                     ))}
                     
