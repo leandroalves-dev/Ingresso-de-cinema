@@ -6,7 +6,7 @@
         "description": "Pipoca mega salgada + 1 refrigerante 700ml",
         "price": 37.00,
         "tax": 4.44,
-        "imagem": "/images/combo-mega-um-refri.png"
+        "imagem": "./images/combo-mega-um-refri.png"
       },
       {
         "id": 2,
@@ -14,7 +14,7 @@
         "description": "Pipoca doce + 1 refrigerante 500ml + 3 chocolates",
         "price": 25.00,
         "tax": 3.00,
-        "imagem": "/images/combo-super-tres-chocolate.png"
+        "imagem": "./images/combo-super-tres-chocolate.png"
         
       },
       {
@@ -23,7 +23,7 @@
         "description": "2 pipocas grandes + 2 refrigerantes 1L + 1 doce",
         "price": 70.00,
         "tax": 6.00,
-        "imagem": "/images/combo-giga-duas-pipocas-dois-refri.png"
+        "imagem": "./images/combo-giga-duas-pipocas-dois-refri.png"
       },
       {
         "id": 4,
@@ -31,7 +31,7 @@
         "description": "Pipoca sem manteiga + 1 refrigerante diet 700ml",
         "price": 30.00,
         "tax": 3.50,
-        "imagem": "/images/combo-giga-um-refri.png"
+        "imagem": "./images/combo-giga-um-refri.png"
       },
       {
         "id": 5,
@@ -39,7 +39,7 @@
         "description": "2 Pipoca gourmet + 2 refrigerante 1L + 1 chocolate",
         "price": 45.00,
         "tax": 5.00,
-        "imagem": "/images/combo-super-dois-refri-um-chocolate.png"
+        "imagem": "./images/combo-super-dois-refri-um-chocolate.png"
       },
       {
         "id": 6,
@@ -47,7 +47,7 @@
         "description": "2 Pipoca de ervas + suco natural 500ml",
         "price": 28.00,
         "tax": 2.50,
-        "imagem": "/images/combo-giga-duas-pipocas.png"
+        "imagem": "./images/combo-giga-duas-pipocas.png"
       },
       {
         "id": 7,
@@ -55,7 +55,7 @@
         "description": "Pipoca + 1 refrigerante 500ml + 2 doce",
         "price": 18.00,
         "tax": 2.00,
-        "imagem": "/images/combo-giga-dois-chocolate-grande.png"
+        "imagem": "./images/combo-giga-dois-chocolate-grande.png"
       },
       {
         "id": 8,
@@ -63,7 +63,7 @@
         "description": "Pipoca trufada + 1 refrigerante + 2 doce",
         "price": 32.00,
         "tax": 3.20,
-        "imagem": "/images/combo-mega-dois-chocolate.png"
+        "imagem": "./images/combo-mega-dois-chocolate.png"
       },
       {
         "id": 9,
@@ -71,7 +71,7 @@
         "description": "Pipoca de caramelo + 1 refrigerante 700ml + 1 chocolate amargo",
         "price": 40.00,
         "tax": 4.00,
-        "imagem": "/images/combo-mega-um-refri.png"
+        "imagem": "./images/combo-mega-um-refri.png"
       },
       {
         "id": 10,
@@ -79,7 +79,7 @@
         "description": "Batata frita + 1 refrigerante 1L",
         "price": 35.00,
         "tax": 4.20,
-        "imagem": "/images/combo-giga-dois-refri.png"
+        "imagem": "./images/combo-giga-dois-refri.png"
       }
     ]
 }
