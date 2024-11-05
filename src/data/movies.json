@@ -11,7 +11,7 @@
             "cast": ["Lupita Nyongo", "Pedro Pascal", "Catherine OHara", "Bill Nighy", "Kit Connor", "Stephanie Hsu", "Mark Hamill", "Matt Berry", "Ving Rhames"],
             "direction": "Chris Sanders",
             "avaliation": 4.5,
-            "image": "./images/movie-1.jpg",
+            "image": "images/movie-1.jpg",
             "showDates": ["2024-11-04", "2024-11-05", "2024-11-06", "2024-11-07", "2024-11-08", "2024-11-09", "2024-11-10", "2024-11-11", "2024-11-12", "2024-11-13", "2024-11-14", "2024-11-15", "2024-11-16", "2024-11-17"],
             "video": "https://www.youtube.com/embed/TbLVc8fnw7c?si=o-gZ_eyX2bxmc68j",
             "rooms": [
@@ -63,7 +63,7 @@
             "cast": ["Gabriella Saraivah", "Bela Fernandes", "Laura Castro"],
             "direction": "Marco Antonio de Carvalho",
             "avaliation": 3.5,
-            "image": "./images/movie-2.jpg",
+            "image": "images/movie-2.jpg",
             "showDates": ["2024-11-04", "2024-11-05", "2024-11-06", "2024-11-07", "2024-11-08", "2024-11-09", "2024-11-10", "2024-11-11", "2024-11-12", "2024-11-13", "2024-11-14", "2024-11-15", "2024-11-16", "2024-11-17"],
             "video": "https://www.youtube.com/embed/NT2gXaA5AnY?si=tZJpvBjJtDLPuoIH",
             "rooms": [
@@ -144,7 +144,7 @@
             "cast": ["Kyle Gallner", "Naomi Scott", "Lukas Gage"],
             "direction": "Parker Finn",
             "avaliation": 4.5,
-            "image": "./images/movie-3.jpg",
+            "image": "images/movie-3.jpg",
             "showDates": ["2024-11-07", "2024-11-08", "2024-11-09", "2024-11-10", "2024-11-11", "2024-11-12", "2024-11-13", "2024-11-14", "2024-11-15", "2024-11-16", "2024-11-17", "2024-11-18", "2024-11-19", "2024-11-20", "2024-11-21", "2024-11-22", "2024-11-23"],
             "video": "https://www.youtube.com/embed/_e-yvJV9NpM?si=zZ0lE_r1DJxYaiSm",
             "rooms": [
@@ -226,7 +226,7 @@
             "cast": ["Karen Abercrombie", "Priscilla C. Shirer", "Aspen Kennedy"],
             "direction": "Alex Kendrick",
             "avaliation": 4.5,
-            "image": "./images/movie-4.jpg",
+            "image": "images/movie-4.jpg",
             "showDates": ["2024-11-04", "2024-11-06", "2024-11-07", "2024-11-08", "2024-11-15", "2024-11-16", "2024-11-17", "2024-11-18", "2024-11-19", "2024-11-20", "2024-11-21", "2024-11-22", "2024-11-23","2024-11-24", "2024-11-25", "2024-11-26", "2024-11-27", "2024-11-28" ],
             "video": "https://www.youtube.com/embed/GZH97r36EhY?si=MzD-mmTVHev6vA2G",
             "rooms": [
@@ -295,7 +295,7 @@
             "cast": ["Joaquin Phoenix", "Stefani (Lady Gaga)", "Germanotta", "Brendan Gleeson", "Catherine Keener", "Zazie Beetz", "Steve Coogan", "Harry Lawtey", "Leigh Gill", "Ken Leung", "Jacob Lofland", "Bill Smitrovich"],
             "direction": "Todd Phillips",
             "avaliation": 1.5,
-            "image": "./images/movie-5.jpg",
+            "image": "images/movie-5.jpg",
             "showDates": ["2024-11-05", "2024-11-06", "2024-11-13", "2024-11-14", "2024-11-15", "2024-11-16", "2024-11-17", "2024-11-18", "2024-11-19", "2024-11-20", "2024-11-21", "2024-11-22", "2024-11-23","2024-11-24", "2024-11-25", "2024-11-26", "2024-11-27", "2024-11-28" ],
             "video": "https://www.youtube.com/embed/exeVIM3j3y0?si=TUr-fn7sYS74g_Io",
             "rooms": [
@@ -376,7 +376,7 @@
             "cast": ["Margaret Qualley", "Demi Moore", "Dennis Quaid"],
             "direction": "Coralie Fargeat",
             "avaliation": 3.0,
-            "image": "./images/movie-6.jpg",
+            "image": "images/movie-6.jpg",
             "showDates": ["2024-11-04", "2024-11-12", "2024-11-13", "2024-11-14", "2024-11-15", "2024-11-16", "2024-11-17", "2024-11-18", "2024-11-19", "2024-11-20", "2024-11-21", "2024-11-22", "2024-11-23","2024-11-24", "2024-11-25", "2024-11-26", "2024-11-27", "2024-11-28" ],
             "video": "https://www.youtube.com/embed/PFeEGaxoQVU?si=JWb6kYYNw0iqebFs",
             "rooms": [
@@ -446,7 +446,7 @@
             "cast": ["Sebastian Stan", "Jeremy Strong", "Maria Bakalova"],
             "direction": "Ali Abbasi",
             "avaliation": 3.5,
-            "image": "./images/movie-7.jpg",
+            "image": "images/movie-7.jpg",
             "showDates": ["2024-11-11", "2024-11-12", "2024-11-13", "2024-11-14", "2024-11-15", "2024-11-16", "2024-11-17", "2024-11-18", "2024-11-19", "2024-11-20", "2024-11-21", "2024-11-22", "2024-11-23","2024-11-24", "2024-11-25", "2024-11-26", "2024-11-27", "2024-11-28" ],
             "video": "https://www.youtube.com/embed/m7TkGQurpS8?si=7jOk-lbulRfPeAME",
             "rooms": [
@@ -527,7 +527,7 @@
             "cast": ["Steve Carell", "Kristen Wiig", "Pierre Coffin"],
             "direction": "Chris Renaud, Patrick Delage",
             "avaliation": 4.0,
-            "image": "./images/movie-8.jpg",
+            "image": "images/movie-8.jpg",
             "showDates": ["2024-11-11", "2024-11-12", "2024-11-13", "2024-11-14", "2024-11-15", "2024-11-16", "2024-11-17", "2024-11-18", "2024-11-19", "2024-11-20", "2024-11-21", "2024-11-22", "2024-11-23","2024-11-24", "2024-11-25", "2024-11-26", "2024-11-27", "2024-11-28", "2024-11-29", "2024-11-30", "2024-12-01", "2024-11-21", "2024-11-22", "2024-11-23","2024-11-24", "2024-11-25", "2024-11-26", "2024-11-27", "2024-11-28", "2024-11-29", "2024-11-30", "2024-12-01","2024-12-02","2024-12-03","2024-12-04"],
             "video": "https://www.youtube.com/embed/seSIJf5mhPE?si=xpzULXM_wf_hKTDX",
             "rooms": [
@@ -608,7 +608,7 @@
             "cast": ["Tom Hardy", "Templo Juno", "Chiwetel Ejiofor"],
             "direction": "Kelly Marcel",
             "avaliation": 3.5,
-            "image": "./images/movie-9.jpg",
+            "image": "images/movie-9.jpg",
             "showDates": ["2024-11-11", "2024-11-12", "2024-11-13", "2024-11-14", "2024-11-15", "2024-11-16", "2024-11-17", "2024-11-18", "2024-11-19", "2024-11-20", "2024-11-21", "2024-11-22", "2024-11-23","2024-11-24", "2024-11-25", "2024-11-26", "2024-11-27", "2024-11-28", "2024-11-29", "2024-11-30", "2024-12-01", "2024-11-21", "2024-11-22", "2024-11-23","2024-11-24", "2024-11-25", "2024-11-26", "2024-11-27", "2024-11-28", "2024-11-29", "2024-11-30", "2024-12-01","2024-12-02","2024-12-03","2024-12-04"],
             "video": "https://www.youtube.com/embed/DA3K6Xrx4HE?si=SPswljsNCTY2_bqc",
             "rooms": [
@@ -689,7 +689,7 @@
             "cast": ["Tilda Swinton", "Julianne Moore", "John Turturro"],
             "direction": "Pedro Almodóvar",
             "avaliation": 4.5,
-            "image": "./images/movie-10.jpg",
+            "image": "images/movie-10.jpg",
             "showDates": ["2024-11-11", "2024-11-12", "2024-11-13", "2024-11-14", "2024-11-15", "2024-11-16", "2024-11-17", "2024-11-18", "2024-11-19", "2024-11-20", "2024-11-21", "2024-11-22", "2024-11-23","2024-11-24", "2024-11-25", "2024-11-26", "2024-11-27", "2024-11-28", "2024-11-29", "2024-11-30", "2024-12-01" ],
             "video": "https://www.youtube.com/embed/PZh6_Y6Vk9Y?si=99GlC03k_l5KXmkT",
             "rooms": [

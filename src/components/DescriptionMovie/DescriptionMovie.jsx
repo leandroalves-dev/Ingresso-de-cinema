@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import './DescriptionMovie.css';
 import { useLocation } from 'react-router-dom';
 
@@ -17,7 +18,7 @@ const DescriptionMovie = ({ onHandleVideo }) => {
     return (
         <div className="grid-details">
             <div className="col-poster">
-                <img src={movie.image} alt="" />
+                <img src={`${process.env.PUBLIC_URL}/${movie.image}`} alt="" />
             </div>
             <div className="col-description">
                 <h1>{movie.title}</h1>
