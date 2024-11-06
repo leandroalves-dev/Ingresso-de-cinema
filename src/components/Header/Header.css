@@ -42,3 +42,102 @@ header .user .grid-user ul li a{
     font-size: 0.75rem;
     cursor: pointer;
 }
+
+.desktop-menu {
+    display: none;
+}
+
+.menu-icon {
+    cursor: pointer;
+    display: block;
+}
+
+/* Sidebar para mobile */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #121212;
+    color: #fff;
+    transition: right 0.3s;
+    padding: 20px;
+    z-index: 999;
+}
+
+.sidebar div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(98, 98, 98, 0.2);
+    padding-bottom: 1rem;
+}
+
+.sidebar .close-menu{
+    background: #121212;
+    padding: 0.3rem 0.6rem;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid rgba(98, 98, 98, 0.2);
+}
+
+.sidebar .menu-mobile{
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(98, 98, 98, 0.2);
+}
+
+.sidebar .menu-user-mobile li{
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.sidebar.open {
+    right: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 12px 0;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+@media(max-width:768px){
+
+    header{
+        padding: 0 1rem;
+    }
+    
+    header .header{
+        justify-content: center;
+    }
+
+    header .header .logo{
+        margin: 0;
+    }
+}
+
+/* Exibe o menu de desktop em telas grandes */
+@media (min-width: 768px) {
+    .desktop-menu {
+        display: flex;
+        gap: 20px;
+    }
+
+    .menu-icon {
+        display: none;
+    }
+
+    .sidebar {
+        display: none;
+    }
+}

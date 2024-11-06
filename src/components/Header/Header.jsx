@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 // icons
-import { BsLock, BsPersonFill } from 'react-icons/bs';
+import { BsLock, BsPersonFill, BsList } from 'react-icons/bs';
 
 //components
 // import Cart from '../Cart/Cart';
@@ -17,6 +17,8 @@ const Header = () => {
     const [showModal, setShowModal] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
     const [nome, setNome] = useState('');
+
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const handleLogin = () => { 
         setIsLogin(true);
@@ -44,6 +46,10 @@ const Header = () => {
         setNome(''); 
     };
 
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
     return (
         <>
             <header>
@@ -67,10 +73,14 @@ const Header = () => {
                     </div>
                 </div>
                 <div className="container">
+
+                    <div className="menu-icon" onClick={toggleSidebar}>
+                        <BsList size={30} />
+                    </div>
                     <div className="header">
                         <Logo />
                         <nav>
-                            <ul>
+                            <ul className="desktop-menu">
                                 <li><Link to='/'>Home</Link></li>
                                 <li><Link to='/quem-somos'>Quem Somos</Link></li>
                                 <li><Link to='/price'>Preços</Link></li>
@@ -79,6 +89,35 @@ const Header = () => {
                         </nav>
                         {/* <Cart /> */}
                     </div>
+                </div>
+
+                {/* Sidebar menu para mobile */}
+                <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+                    <div>
+                        <span>Menu</span>
+                        <span className="close-menu" onClick={toggleSidebar}>x</span>
+                    </div>
+                    <ul className='menu-mobile'>
+                        <li><Link to='/' onClick={toggleSidebar}>Home</Link></li>
+                        <li><Link to='/quem-somos' onClick={toggleSidebar}>Quem Somos</Link></li>
+                        <li><Link to='/price' onClick={toggleSidebar}>Preços</Link></li>
+                        <li><Link to='/sale' onClick={toggleSidebar}>Promoções</Link></li>
+                    </ul>
+                    <ul className='menu-user-mobile'>
+                        {nome ? (
+                            <>
+                                <li>Olá {nome}</li>
+                                <li className='logout' onClick={handleLogout}>Sair</li>
+                            </>
+
+                        ):(
+                            <>
+                                <li>Olá visitante</li>
+                                <li onClick={handleLogin}><BsLock /> Cadastra-se</li>
+                                <li onClick={handleRegister}><BsPersonFill /> Entrar</li>
+                            </>
+                        )}
+                    </ul>
                 </div>
             </header>
 
