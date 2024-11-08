@@ -117,6 +117,11 @@ header .user .grid-user ul li a{
         padding: 0 1rem;
     }
 
+    header .container{
+        margin: 0 auto 16px;
+        padding: 1rem;
+    }
+
     header .user{
         display: none;
     }
