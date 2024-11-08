@@ -116,6 +116,10 @@ header .user .grid-user ul li a{
     header{
         padding: 0 1rem;
     }
+
+    header .user{
+        display: none;
+    }
     
     header .header{
         justify-content: center;
