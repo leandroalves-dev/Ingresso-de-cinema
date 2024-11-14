@@ -139,3 +139,13 @@
         
     }
 }
+
+@media(max-width:768px){
+    .print-button svg{
+        bottom: 20px;
+    }
+
+    .container-resumo.finalizado{
+        text-align: center;
+    }
+}

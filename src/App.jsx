@@ -32,7 +32,7 @@ function App() {
         <>
             <PaymentProvider>
                 <MoviesProvider>
-                <BrowserRouter basename='/sistema-ingresso-cinema-react/'> 
+                <BrowserRouter> 
                     <Header />
                         <Routes>
                             <Route path='/' element={<Home />} />
