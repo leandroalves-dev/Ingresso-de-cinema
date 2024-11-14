@@ -141,6 +141,11 @@
 }
 
 @media(max-width:768px){
+
+    .details h1{
+        font-size: 1.3rem;
+    }
+
     .print-button svg{
         bottom: 20px;
     }
