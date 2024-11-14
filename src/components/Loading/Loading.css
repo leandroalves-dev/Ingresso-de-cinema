@@ -31,3 +31,9 @@
         transform: rotate(1turn);
     }
 }
+
+@media(max-width:768px){
+    .loading .c-loader{
+        margin-left: -10px;
+    }
+}

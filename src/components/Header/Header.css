@@ -120,6 +120,7 @@ header .user .grid-user ul li a{
     header .container{
         margin: 0 auto 16px;
         padding: 1rem;
+        display: flex;
     }
 
     header .user{
@@ -132,6 +133,11 @@ header .user .grid-user ul li a{
 
     header .header .logo{
         margin: 0;
+        text-align: center;
+    }
+
+    header .header .logo img{
+        width: 70%;
     }
 }
 
