@@ -1,0 +1,9 @@
+1) Rodar aplicação:
+    npm run dev
+
+2) Instalação de pacotes:
+    react-router-dom
+    react-icons
+    react-slick
+    slick-carousel
+    Tailwind CSS
