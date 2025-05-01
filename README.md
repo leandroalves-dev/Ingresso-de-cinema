@@ -1,8 +1,17 @@
 # Meu Projeto
 
-Este é um site onde você pode comprar seu ingresso de cinema. Nele você pode escolher o filme, o tipo de ingresso, a bebida e a pipoca.
+Sistema de Simulação de Compra de Ingressos de Cinema
 
-**Observação**: Só não foi feito a parte de pagamento, fiz apenas uma simulação para selecionar e passar de tela.
+Este projeto é uma aplicação interativa onde o usuário pode simular a compra de ingressos de cinema de forma completa. O usuário pode:
+
+- Escolher o filme desejado
+- Selecionar o assento
+- Definir o tipo de ingresso (ex: inteira, meia)
+- Escolher opções de bebida e pipoca
+
+Para finalizar a simulação da compra, o usuário precisa estar logado. Toda a persistência de dados é feita via localStorage, ou seja, não há integração com banco de dados. Ao deslogar, os dados são automaticamente removidos.
+
+Após a finalização do pedido, um bilhete digital é gerado com todas as informações da compra. Trata-se de uma simulação completa do processo de compra de ingresso, ideal para fins de estudo e demonstração de fluxo de usuários, manipulação de estado e uso de armazenamento local no navegador.
 
 ## Tecnologias usadas
 
