@@ -5,7 +5,7 @@ import { Movie } from '../types/Movies';
 export const getMovies = async() => {
     try {
 
-        const response = await Services.get('/json/movies/api.json');
+        const response = await Services.get('/cinema/json/api.json');
         return response.data
         
     } catch (error) {
@@ -16,7 +16,7 @@ export const getMovies = async() => {
 
 export const getMoviesId = async (id: number): Promise<Movie> => {
     try {
-        const response = await Services.get(`/json/movies/${id}.json`); // Busca apenas UM filme
+        const response = await Services.get(`/cinema/json/${id}.json`); // Busca apenas UM filme
         return response.data;
     } catch (error) {
         console.log("Erro ao buscar o filme por id", error);
@@ -28,7 +28,7 @@ export const getMoviesId = async (id: number): Promise<Movie> => {
 export const getCombos = async () => {
     try {
 
-        const response = await Services.get('/json/movies/combos.json');
+        const response = await Services.get('/cinema/json/combos.json');
 
         console.log('COMBOS', response.data)
 
@@ -43,7 +43,7 @@ export const getCombos = async () => {
 export const getPrices = async () => {
     try {
 
-        const response = await Services.get('/json/movies/prices.json')
+        const response = await Services.get('/cinema/json/prices.json')
 
         console.log('Prices', response.data)
 
@@ -58,7 +58,7 @@ export const getPrices = async () => {
 export const getNews = async () => {
     try {
 
-        const response = await Services.get('/json/movies/movienews.json')
+        const response = await Services.get('/cinema/json/movienews.json')
         
         console.log('News', response.data);
 
