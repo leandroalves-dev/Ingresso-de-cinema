@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 //Context
 import { PaymentContext } from "../../context/PaymentContext"
@@ -23,6 +23,10 @@ const PrintTickets = () => {
     const date = selectedMovie?.selectedDate || new Date().toISOString().split('T')[0]; 
     const [, month, day] = date.split("-");
     const formattedDate = `${day}/${month}`;
+
+    useEffect(() => {
+        localStorage.removeItem("step");
+    }, []);
 
     return (
         <div className="p-5 text-white">

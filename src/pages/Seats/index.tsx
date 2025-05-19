@@ -89,6 +89,15 @@ const Seats = () => {
         if (step > 1) setStep(step - 1); 
     }
 
+
+    useEffect(() => {
+        if (step < 5) {
+            localStorage.setItem("step", step.toString());
+        } else {
+            localStorage.removeItem("step"); 
+        }
+    }, [step]);
+
     return (
         <Container>
 
