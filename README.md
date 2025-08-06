@@ -22,6 +22,14 @@ Após a finalização do pedido, um bilhete digital é gerado com todas as infor
 - ![Axios Badge](https://img.shields.io/badge/Axios-5A29E4?logo=axios&logoColor=white)
 - ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
 
+**Demonstração do Projeto**
+
+<img width="400" height="200" alt="Image" src="https://github.com/user-attachments/assets/3ba41464-0066-42f6-a74a-29b0859e2e10" />
+<img width="400" height="200" alt="Image" src="https://github.com/user-attachments/assets/9a297c5b-6495-4e48-8bf1-fa242c82ea25" />
+<img width="400" height="200" alt="Image" src="https://github.com/user-attachments/assets/88209802-3763-4161-bf88-2cd9220afcf8" />
+<img width="400" height="200" alt="Image" src="https://github.com/user-attachments/assets/bd9eace8-a128-46be-a848-54e7ea32bb62" />
+<img width="400" height="200" alt="Image" src="https://github.com/user-attachments/assets/e0e8b2e3-c98c-4904-9f4d-ab4b3061f368" />
+<img width="400" height="200" alt="Image" src="https://github.com/user-attachments/assets/573a53b6-8213-4020-be71-0c99fd63ed2f" />
 
 ## Como rodar o projeto
 
