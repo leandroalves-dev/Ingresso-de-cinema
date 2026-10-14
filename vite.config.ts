@@ -8,14 +8,5 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
-  server: {
-    proxy: {
-      '/api/movies': {
-        target: 'https://leandroeffgen.com.br',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/movies/, '/json/movies/api.json'),
-      },
-    },
-  },
-  base: '/projects/cinema/'
+  base: '/'
 })

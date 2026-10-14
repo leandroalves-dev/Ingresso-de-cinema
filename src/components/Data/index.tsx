@@ -1,99 +1,80 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-// Components
 import Carousel from "../Carousel";
 import FilterMonth from "../FilterMonth";
-
-// Hooks
 import { useMovies } from "../../hooks/useMovies";
-
-// Utils
-import { allMonths } from "../../utils/months";
-
-// Types
+import {
+    getAvailableDaysInMonth,
+    getDateForMonth,
+    getFutureMonths,
+    getMoviesForDate,
+    formatMonthKey,
+} from "../../utils/schedule";
 import { Movie } from "../../types/Movies";
 
-const Data = ({ onFilterMovies }: { onFilterMovies: (movies: Movie[], date: string | null) => void }) => {
+interface DataProps {
+    onFilterMovies: (movies: Movie[], date: string | null) => void;
+}
 
-    // Obtém o mês atual do sistema
-    const currentDate = new Date();
-    const currentMonthIndex = currentDate.getMonth(); // Obtém o índice do mês (0 = Janeiro)
-    const currentMonth = allMonths[currentMonthIndex]; // Obtém o nome do mês
-    const currentYear = currentDate.getFullYear();
-    const currentDay = currentDate.getDate();
-
-    // Estados
-    const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
+const Data = ({ onFilterMovies }: DataProps) => {
+    const [referenceDate] = useState(() => new Date());
+    const [selectedMonth, setSelectedMonth] = useState(() => formatMonthKey(referenceDate));
     const [days, setDays] = useState<number[]>([]);
-    const [selectedDate, setSelectedDate] = useState<string | null>(null);
-    const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
-   
+    const [selectedDay, setSelectedDay] = useState<number | null>(null);
     const { movies } = useMovies();
+    const months = getFutureMonths(referenceDate);
 
-    console.log("Filmes filtrados:", filteredMovies, "Data selecionada:", selectedDate);
+    useEffect(() => {
+        const availableDays = getAvailableDaysInMonth(movies, selectedMonth, referenceDate);
+        const firstDay = availableDays[0] ?? null;
 
-    const updateDaysInMonth = (month: string) => {
-        const selectedMonthIndex = allMonths.indexOf(month);
-        if (selectedMonthIndex === -1) return; // Evita erro caso o mês não seja encontrado
+        setDays(availableDays);
+        setSelectedDay(firstDay);
 
-        // Obtém todos os dias do mês selecionado
-        let daysArray = Array.from({ length: new Date(currentYear, selectedMonthIndex + 1, 0).getDate() }, (_, i) => i + 1);
-
-        console.log("Dias antes do filtro:", daysArray);
-
-        // Se o mês selecionado for o mês atual, remove os dias anteriores ao dia atual
-        if (selectedMonthIndex === currentMonthIndex) { 
-            daysArray = daysArray.filter(day => day >= currentDay);
+        if (firstDay === null) {
+            onFilterMovies([], null);
+            return;
         }
 
-        console.log("Dias depois do filtro:", daysArray);
+        const date = getDateForMonth(selectedMonth, firstDay);
+        if (!date) {
+            onFilterMovies([], null);
+            return;
+        }
 
-        setDays(daysArray);
+        onFilterMovies(getMoviesForDate(movies, date), date);
+    }, [movies, onFilterMovies, referenceDate, selectedMonth]);
 
-        // Define a data inicial correta no carrossel
-        const formattedDay = (selectedMonthIndex === currentMonthIndex ? currentDay : 1).toString().padStart(2, '0');
-        const formattedMonth = (selectedMonthIndex + 1).toString().padStart(2, '0');
-        const formattedDate = `${currentYear}-${formattedMonth}-${formattedDay}`;
-        
-        setSelectedDate(formattedDate);
-    };
-
-    // Atualiza os dias quando o componente for montado
-    useEffect(() => {
-        updateDaysInMonth(selectedMonth);
-    }, []); 
-
-    // Troca os dias no carrossel quando o select for alterado
-    const handleMonthChange = (month: string) => {
-        setSelectedMonth(month);
-        updateDaysInMonth(month);
-        setFilteredMovies([]);
-    };
-
-    // Retorna a data selecionada no carrossel
     const handleSelectDay = (day: number) => {
-        const selectedMonthIndex = allMonths.indexOf(selectedMonth);
-        const formattedDay = day.toString().padStart(2, '0');
-        const formattedMonth = (selectedMonthIndex + 1).toString().padStart(2, '0'); 
-        const formattedDate = `${currentYear}-${formattedMonth}-${formattedDay}`;
+        const date = getDateForMonth(selectedMonth, day);
+        if (!date) return;
 
-        setSelectedDate(formattedDate);
-
-        const movieForDate = movies.filter(movie => movie.showDates.includes(formattedDate));
-        setFilteredMovies(movieForDate);
-
-        onFilterMovies(movieForDate, formattedDate);
+        setSelectedDay(day);
+        onFilterMovies(getMoviesForDate(movies, date), date);
     };
 
     return (
-       <>
+        <>
             <div className="flex justify-between items-center">
                 <h1 className="text-white text-[26px]">Programação</h1>
-                <FilterMonth onChange={handleMonthChange} />
+                <FilterMonth
+                    months={months}
+                    value={selectedMonth}
+                    onChange={setSelectedMonth}
+                />
             </div>
-            {days.length > 0 && <Carousel days={days} onDaySelect={handleSelectDay} />}
-       </>
+
+            {days.length > 0 ? (
+                <Carousel
+                    days={days}
+                    selectedDay={selectedDay}
+                    onDaySelect={handleSelectDay}
+                />
+            ) : (
+                <p className="my-5 text-white">Não há sessões disponíveis neste mês.</p>
+            )}
+        </>
     );
-}
+};
 
 export default Data;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -6,12 +6,17 @@ import 'slick-carousel/slick/slick-theme.css';
 
 interface CarouselProps {
     days: number[]; 
+    selectedDay: number | null;
     onDaySelect: (day: number) => void;
 }
 
-const Carousel = ({ days, onDaySelect }: CarouselProps) => {
+const Carousel = ({ days, selectedDay, onDaySelect }: CarouselProps) => {
    
-    const [active, setActive] = useState<number | null>(null);
+    const [active, setActive] = useState<number | null>(selectedDay);
+
+    useEffect(() => {
+        setActive(selectedDay);
+    }, [selectedDay]);
 
 
     //configuração do carousel

@@ -1,71 +1,46 @@
-import Services from './axios';
+import apiData from '../json/api.json';
+import combosData from '../json/combos.json';
+import movienewsData from '../json/movienews.json';
+import pricesData from '../json/prices.json';
+import { Combos } from '../types/Combos';
+import { Movie, Weekday } from '../types/Movies';
+import { News } from '../types/News';
+import { Prices } from '../types/Prices';
 
-import { Movie } from '../types/Movies';
-
-export const getMovies = async() => {
-    try {
-
-        const response = await Services.get('/cinema/json/api.json');
-        return response.data
-        
-    } catch (error) {
-        console.log('Erro ao buscar filmes', error);
-        throw error;
+const toWeekday = (value: number): Weekday => {
+    if (!Number.isInteger(value) || value < 1 || value > 7) {
+        throw new Error(`Dia da semana inválido na programação: ${value}`);
     }
-}
 
-export const getMoviesId = async (id: number): Promise<Movie> => {
-    try {
-        const response = await Services.get(`/cinema/json/${id}.json`); // Busca apenas UM filme
-        return response.data;
-    } catch (error) {
-        console.log("Erro ao buscar o filme por id", error);
-        throw error;
-    }
+    return value as Weekday;
 };
 
+const movies: { movies: Movie[] } = {
+    movies: apiData.movies.map((movie) => ({
+        ...movie,
+        schedule: {
+            weekdays: movie.schedule.weekdays.map(toWeekday),
+        },
+    })),
+};
+const combos: { combos: Combos[] } = combosData;
+const news: { movieNews: News[] } = movienewsData;
+const prices: Prices = pricesData;
 
-export const getCombos = async () => {
-    try {
+export const getMovies = async () => movies;
 
-        const response = await Services.get('/cinema/json/combos.json');
+export const getMoviesId = async (id: number): Promise<Movie> => {
+    const movie = movies.movies.find((item) => item.id === id);
 
-        console.log('COMBOS', response.data)
-
-        return response.data;
-        
-    } catch (error) {
-        console.log('Erro ao buscar o combo', error)
-        throw error;
+    if (!movie) {
+        throw new Error(`Filme com o id ${id} não encontrado.`);
     }
-}
 
-export const getPrices = async () => {
-    try {
+    return movie;
+};
 
-        const response = await Services.get('/cinema/json/prices.json')
+export const getCombos = async () => combos;
 
-        console.log('Prices', response.data)
+export const getPrices = async () => prices;
 
-        return response.data;
-        
-    } catch (error) {
-        console.log('Erro ao buscar o preço')
-        throw error;
-    }
-}
-
-export const getNews = async () => {
-    try {
-
-        const response = await Services.get('/cinema/json/movienews.json')
-        
-        console.log('News', response.data);
-
-        return response.data;
-        
-    } catch (error) {
-        console.log(error)
-        throw error;
-    }
-}
+export const getNews = async () => news;

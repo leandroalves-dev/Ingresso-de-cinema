@@ -1,10 +1,16 @@
 // Define o tipo para os horários de exibição
+export type Weekday = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+
+export interface MovieSchedule {
+    weekdays: Weekday[];
+}
+
 export interface Room {
     id: number;
     name: string;
     showtimes: {
-        dub: string[];  // Horários de exibição dublados
-        leg: string[];  // Horários de exibição legendados
+        dub?: string[];  // Horários de exibição dublados
+        leg?: string[];  // Horários de exibição legendados
     };
 }
 
@@ -29,7 +35,7 @@ export interface Movie {
     direction: string;
     avaliation: number;
     image: string;
-    showDates: string[]; // Datas de exibição
+    schedule: MovieSchedule;
     video: string;
     rooms: Room[];  // Salas que exibem o filme
     comments: Comment[];

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 //Hooks
@@ -24,7 +24,7 @@ export default function MovieList(){
 
     const { setSelectedMovie } = useContext(MovieContext);
     
-    const { movies, loading, error } = useMovies();
+    const { loading, error } = useMovies();
     const [ currentPage, setCurrentPage ] = useState(1);
 
     const [sinopse, setSinopse] = useState<Movie | null>(null);
@@ -37,12 +37,13 @@ export default function MovieList(){
 
     const navigate = useNavigate();
 
-    const handleFilterMovies = (movies: Movie[], date: string | null) => {
+    const handleFilterMovies = useCallback((movies: Movie[], date: string | null) => {
         setFilteredMovies(movies);
         setSelectedDate(date);
-    };
+        setCurrentPage(1);
+    }, []);
 
-    const moviesToDisplay = selectedDate ? filteredMovies : movies;
+    const moviesToDisplay = selectedDate ? filteredMovies : [];
 
     //Paginação
     const moviesPerPage = 4;
@@ -128,7 +129,7 @@ export default function MovieList(){
                                     <div className="my-5">
                                         {Object.entries(room.showtimes).map(([language, times]) => (
                                         <div key={language} className="mb-3 flex flex-row gap-10">
-                                                {times.map((time, index) => (
+                                                {times?.map((time, index) => (
                                                     <div key={index} className="flex items-center justify-between rounded-[3px] pl-4 w-full bg-neutral-800 text-white">
                                                         <span>{language === 'dub' ? 'Dub' : 'Leg'}</span>
                                                         <span>{time}</span>

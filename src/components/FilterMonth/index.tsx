@@ -1,26 +1,23 @@
-
-const getCurrentMonths = () => {
-    const allMonths = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Junho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-
-    const currentMonthIndex = new Date().getMonth();
-    return allMonths.slice(currentMonthIndex)
-}
+import { MonthOption } from "../../utils/schedule";
 
 interface FilterMonthProps {
-    onChange?: (selectedMonth: string) => void;
+    months: MonthOption[];
+    value: string;
+    onChange: (selectedMonth: string) => void;
 }
 
-const FilterMonth = ({onChange}: FilterMonthProps) => {
+const FilterMonth = ({ months, value, onChange }: FilterMonthProps) => (
+    <select
+        value={value}
+        className="border-1 text-white focus:outline-none border-[#151313] cursor-pointer p-3"
+        onChange={(event) => onChange(event.target.value)}
+    >
+        {months.map((month) => (
+            <option className="text-black" key={month.key} value={month.key}>
+                {month.label}
+            </option>
+        ))}
+    </select>
+);
 
-    const months = getCurrentMonths();
-
-    return (
-        <select className="border-1 text-white focus:outline-none border-[#151313] cursor-pointer p-3" onChange={(e) => onChange && onChange(e.target.value)}>
-            {months.map((month, index) => (
-                <option className="text-black" key={index} value={month}>{month}</option>
-            ))}
-        </select>
-    )
-}
-
-export default FilterMonth
+export default FilterMonth;

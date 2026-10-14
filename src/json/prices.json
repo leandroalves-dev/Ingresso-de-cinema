@@ -1,0 +1,40 @@
+{
+  "sessions": {
+    "2D": {
+      "weekdays": {
+        "days": "Segunda à quinta",
+        "fullPrice": 30,
+        "halfPrice": 15
+      },
+      "weekends": {
+        "days": "Sexta à domingo",
+        "fullPrice": 40,
+        "halfPrice": 20
+      }
+    },
+    "3D": {
+      "weekdays": {
+       "days": "Segunda à quinta",
+        "fullPrice": 35,
+        "halfPrice": 17
+      },
+      "weekends": {
+        "days": "Sexta à domingo",
+        "fullPrice": 50,
+        "halfPrice": 25
+      }
+    },
+    "premium": {
+      "weekdays": {
+        "days": "Segunda à quinta",
+        "fullPrice": 30,
+        "halfPrice": 15
+      },
+      "weekends": {
+        "days": "Sexta à domingo",
+        "fullPrice": 45,
+        "halfPrice": 20
+      }
+    }
+  }
+}
