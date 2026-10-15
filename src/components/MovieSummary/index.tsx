@@ -8,6 +8,7 @@ import { BsCalendarEvent, BsClock, BsGeoAlt, BsTrash, BsFillTicketFill } from "r
 import { SeatContext } from "../../context/SeatContext";
 import { PaymentContext } from "../../context/PaymentContext";
 import { MovieContext } from "../../context/MovieContext";
+import { clearCheckoutDraft } from "../../utils/checkoutStorage";
 
 //components
 import Loading from "../Loading";
@@ -26,7 +27,7 @@ const MovieSummary = ({ nextStep, prevStep, onStep }: MovieSummaryProps) => {
     const {selectedTickets, total, taxaTotal, resetPayment, selectedCombos} = paymentContext;
    
     const {selectedSeats, resetSeat} = useContext(SeatContext);
-    const { selectedMovie } = useContext(MovieContext);
+    const { selectedMovie, resetMovieSelection } = useContext(MovieContext);
 
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -47,6 +48,8 @@ const MovieSummary = ({ nextStep, prevStep, onStep }: MovieSummaryProps) => {
 
         resetPayment();
         resetSeat();
+        resetMovieSelection();
+        clearCheckoutDraft();
 
         setTimeout( () => {
             setLoading(false)

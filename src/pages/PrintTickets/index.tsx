@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 import Logo from "../../assets/logo.png";
 import { PaymentContext } from "../../context/PaymentContext";
@@ -22,10 +22,6 @@ const PrintTickets = () => {
     const date = selectedMovie?.selectedDate || new Date().toISOString().split("T")[0];
     const [, month, day] = date.split("-");
     const formattedDate = `${day}/${month}`;
-
-    useEffect(() => {
-        localStorage.removeItem("step");
-    }, []);
 
     return (
         <div className="ticket-success-page p-5 text-white">

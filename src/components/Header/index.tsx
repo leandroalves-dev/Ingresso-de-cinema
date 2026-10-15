@@ -10,7 +10,9 @@ import Logar from "../../pages/Login/Logar";
 import useAuth from "../../hooks/useAuth";
 import { SeatContext } from "../../context/SeatContext";
 import { PaymentContext } from "../../context/PaymentContext";
+import { MovieContext } from "../../context/MovieContext";
 import { getStoredUser } from "../../utils/authStorage";
+import { clearCheckoutDraft, readCheckoutDraft } from "../../utils/checkoutStorage";
 
 const navigation = [
     { label: "Home", to: "/" },
@@ -27,6 +29,7 @@ const Header = () => {
 
     const { resetPayment } = paymentContext;
     const { resetSeat } = useContext(SeatContext);
+    const { resetMovieSelection } = useContext(MovieContext);
     const { user, setUser } = useAuth();
     const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
@@ -35,6 +38,8 @@ const Header = () => {
     const handleReset = () => {
         resetSeat();
         resetPayment();
+        resetMovieSelection();
+        clearCheckoutDraft();
     };
 
     const openModal = (type: "register" | "login") => {
@@ -53,7 +58,7 @@ const Header = () => {
     const handleLogout = () => {
         setUser("");
         localStorage.removeItem("User");
-        if (localStorage.getItem("step")) navigate("/");
+        if (readCheckoutDraft()) navigate("/");
     };
 
     return (

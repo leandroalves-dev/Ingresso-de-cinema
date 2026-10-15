@@ -1,4 +1,5 @@
 import { createContext, useState, ReactNode } from "react";
+import { readCheckoutDraft, updateCheckoutDraft } from "../utils/checkoutStorage";
 
 // Definição do tipo para o contexto
 interface SeatContextType {
@@ -16,18 +17,20 @@ const SeatContext = createContext<SeatContextType>({
 
 // Provedor do contexto
 export const SeatProvider = ({ children }: { children: ReactNode }) => {
-    const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+    const [selectedSeats, setSelectedSeats] = useState<string[]>(() => readCheckoutDraft()?.selectedSeats ?? []);
 
     const resetSeat = () => {
-        setSelectedSeats([])
+        setSelectedSeats([]);
+        updateCheckoutDraft({ selectedSeats: [] });
     }
 
     const toggleSeat = (seat: string) => {
-        setSelectedSeats((prevSelectedSeats) =>
-        prevSelectedSeats.includes(seat)
-            ? prevSelectedSeats.filter((s) => s !== seat)
-            : [...prevSelectedSeats, seat]
-        );
+        const nextSelectedSeats = selectedSeats.includes(seat)
+            ? selectedSeats.filter((selectedSeat) => selectedSeat !== seat)
+            : [...selectedSeats, seat];
+
+        setSelectedSeats(nextSelectedSeats);
+        updateCheckoutDraft({ selectedSeats: nextSelectedSeats });
     };
     
     return (

@@ -1,14 +1,10 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
 
 import { Combos } from "../types/Combos";
+import { TicketQuantities, TicketSelection } from "../types/Checkout";
+import { readCheckoutDraft, updateCheckoutDraft } from "../utils/checkoutStorage";
 
-interface Ticket{
-    type: string;
-    value: number;
-    quantity: number;
-}
-
-interface PaymentContextType{
+interface PaymentContextType {
     valorInteira: number;
     valorMeia: number;
     valorMeiaBradesco: number;
@@ -21,8 +17,8 @@ interface PaymentContextType{
     ticketMeiaBradesco: number;
     ticketMeiaItau: number;
     totalSeats: number;
-    selectedTickets: Ticket[];
-    
+    selectedTickets: TicketSelection[];
+
     resetPayment: () => void;
     addPriceInteira: () => void;
     removePriceInteira: () => void;
@@ -44,17 +40,39 @@ interface PaymentContextType{
 
 const PaymentContext = createContext<PaymentContextType | undefined>(undefined);
 
-const PaymentProvider = ({ children }:{children: ReactNode}) => {
+const addTicketSelection = (tickets: TicketSelection[], type: string, value: number) => {
+    const existingTicket = tickets.find((ticket) => ticket.type === type);
 
-    // Estados dos ingressos
-    const [ticketInteira, setTicketInteira] = useState(0);
-    const [ticketMeia, setTicketMeia] = useState(0);
-    const [ticketMeiaBradesco, setTicketMeiaBradesco] = useState(0);
-    const [ticketMeiaItau, setTicketMeiaItau] = useState(0);
-    const [totalSeats, setTotalSeats] = useState(0);
+    if (existingTicket) {
+        return tickets.map((ticket) => ticket.type === type ? { ...ticket, quantity: ticket.quantity + 1 } : ticket);
+    }
 
-    const [selectedTickets, setSelectedTickets] = useState<{type: string, value: number, quantity: number}[]>([]);
-    const [selectedCombos, setSelectedCombos] = useState<Combos[]>([]);
+    return [...tickets, { type, value, quantity: 1 }];
+};
+
+const removeTicketSelection = (tickets: TicketSelection[], type: string) => {
+    const existingTicket = tickets.find((ticket) => ticket.type === type);
+
+    if (!existingTicket) return tickets;
+
+    if (existingTicket.quantity > 1) {
+        return tickets.map((ticket) => ticket.type === type ? { ...ticket, quantity: ticket.quantity - 1 } : ticket);
+    }
+
+    return tickets.filter((ticket) => ticket.type !== type);
+};
+
+const PaymentProvider = ({ children }: { children: ReactNode }) => {
+    const [ticketInteira, setTicketInteira] = useState(() => readCheckoutDraft()?.ticketQuantities.ticketInteira ?? 0);
+    const [ticketMeia, setTicketMeia] = useState(() => readCheckoutDraft()?.ticketQuantities.ticketMeia ?? 0);
+    const [ticketMeiaBradesco, setTicketMeiaBradesco] = useState(() => readCheckoutDraft()?.ticketQuantities.ticketMeiaBradesco ?? 0);
+    const [ticketMeiaItau, setTicketMeiaItau] = useState(() => readCheckoutDraft()?.ticketQuantities.ticketMeiaItau ?? 0);
+    const [totalSeats, setTotalSeats] = useState(() => {
+        const quantities = readCheckoutDraft()?.ticketQuantities;
+        return quantities ? quantities.ticketInteira + quantities.ticketMeia + quantities.ticketMeiaBradesco + quantities.ticketMeiaItau : 0;
+    });
+    const [selectedTickets, setSelectedTickets] = useState<TicketSelection[]>(() => readCheckoutDraft()?.selectedTickets ?? []);
+    const [selectedCombos, setSelectedCombos] = useState<Combos[]>(() => readCheckoutDraft()?.selectedCombos ?? []);
 
     const valorInteira = 30.00;
     const valorMeia = 15.00;
@@ -64,6 +82,22 @@ const PaymentProvider = ({ children }:{children: ReactNode}) => {
     const valorTaxaInteira = 5.00;
     const valorTaxaMeia = 2.50;
 
+    const getTicketQuantities = (overrides: Partial<TicketQuantities> = {}): TicketQuantities => ({
+        ticketInteira,
+        ticketMeia,
+        ticketMeiaBradesco,
+        ticketMeiaItau,
+        ...overrides,
+    });
+
+    const persistPaymentDraft = (
+        ticketQuantities: TicketQuantities,
+        nextSelectedTickets = selectedTickets,
+        nextSelectedCombos = selectedCombos,
+    ) => {
+        updateCheckoutDraft({ ticketQuantities, selectedTickets: nextSelectedTickets, selectedCombos: nextSelectedCombos });
+    };
+
     const resetPayment = () => {
         setTicketInteira(0);
         setTicketMeia(0);
@@ -71,192 +105,141 @@ const PaymentProvider = ({ children }:{children: ReactNode}) => {
         setTicketMeiaItau(0);
         setSelectedTickets([]);
         setSelectedCombos([]);
-    }
-    
+        persistPaymentDraft({
+            ticketInteira: 0,
+            ticketMeia: 0,
+            ticketMeiaBradesco: 0,
+            ticketMeiaItau: 0,
+        }, [], []);
+    };
 
-    //Função de adicionar/remover ingressos
-
-    //INTEIRA
     const addPriceInteira = () => {
-        setTicketInteira(ticketInteira + 1)
-        setSelectedTickets((prev) => {
-            const bilhete = prev.find(ticket => ticket.type === 'Ingresso inteira');
-            if (bilhete) {
-                return prev.map(ticket => ticket.type === 'Ingresso inteira' ? { ...ticket, quantity: ticket.quantity + 1 } : ticket);
-            } else {
-                return [...prev, { type: 'Ingresso inteira', value: valorInteira, quantity: 1 }];
-            }
-        });
-    }
+        const nextTicketInteira = ticketInteira + 1;
+        const nextSelectedTickets = addTicketSelection(selectedTickets, "Ingresso inteira", valorInteira);
+
+        setTicketInteira(nextTicketInteira);
+        setSelectedTickets(nextSelectedTickets);
+        persistPaymentDraft(getTicketQuantities({ ticketInteira: nextTicketInteira }), nextSelectedTickets);
+    };
 
     const removePriceInteira = () => {
-        if(ticketInteira > 0){
-            setTicketInteira(ticketInteira - 1);
-            setSelectedTickets((prev) => {
-                const bilhete = prev.find(ticket => ticket.type === 'Ingresso inteira');
-                if(bilhete){
-                    if(bilhete.quantity - 1 > 0){
-                        return prev.map(ticket => ticket.type === 'Ingresso inteira' ? {...ticket, quantity: ticket.quantity - 1} : ticket)
-                    }else{
-                        return prev.filter(ticket => ticket.type !== 'Ingresso inteira')
-                    }
-                }
-                return prev
-            })
-        }
-    }
+        if (ticketInteira <= 0) return;
 
-    //MEIA
+        const nextTicketInteira = ticketInteira - 1;
+        const nextSelectedTickets = removeTicketSelection(selectedTickets, "Ingresso inteira");
+
+        setTicketInteira(nextTicketInteira);
+        setSelectedTickets(nextSelectedTickets);
+        persistPaymentDraft(getTicketQuantities({ ticketInteira: nextTicketInteira }), nextSelectedTickets);
+    };
+
     const addPriceMeia = () => {
-        setTicketMeia(ticketMeia + 1)
-        setSelectedTickets((prev) => {
-            const bilhete = prev.find(ticket => ticket.type === 'Ingresso meia');
-            if(bilhete){
-                return prev.map(ticket => ticket.type === 'Ingresso meia' ? {...ticket, quantity: ticket.quantity + 1} : ticket);
-            }else{
-                return [...prev, {type: 'Ingresso meia', value: valorMeia, quantity: 1 }];
-            }
-        })
-    }
+        const nextTicketMeia = ticketMeia + 1;
+        const nextSelectedTickets = addTicketSelection(selectedTickets, "Ingresso meia", valorMeia);
+
+        setTicketMeia(nextTicketMeia);
+        setSelectedTickets(nextSelectedTickets);
+        persistPaymentDraft(getTicketQuantities({ ticketMeia: nextTicketMeia }), nextSelectedTickets);
+    };
 
     const removePriceMeia = () => {
-        if(ticketMeia > 0){
-            setTicketMeia(ticketMeia - 1);
-            setSelectedTickets((prev) => {
-                const bilhete = prev.find(ticket => ticket.type === 'Ingresso meia');
-                if(bilhete){
-                    if(bilhete.quantity - 1 > 0){
-                        return prev.map(ticket => ticket.type === 'Ingresso meia' ? {...ticket, quantity: ticket.quantity - 1}: ticket);
-                    }else{
-                        return prev.filter(ticket => ticket.type !== 'Ingresso meia')
-                    }
-                }
-                return prev;
-            })
-        }
-    }
+        if (ticketMeia <= 0) return;
 
-    //MEIA BRADESCO
+        const nextTicketMeia = ticketMeia - 1;
+        const nextSelectedTickets = removeTicketSelection(selectedTickets, "Ingresso meia");
+
+        setTicketMeia(nextTicketMeia);
+        setSelectedTickets(nextSelectedTickets);
+        persistPaymentDraft(getTicketQuantities({ ticketMeia: nextTicketMeia }), nextSelectedTickets);
+    };
+
     const addPriceBradesco = () => {
-        setTicketMeiaBradesco(ticketMeiaBradesco + 1)
-        setSelectedTickets((prev) => {
-            const bilhete = prev.find(ticket => ticket.type === 'Ingresso meia bradesco');
-            if(bilhete){
-                return prev.map(ticket => ticket.type === 'Ingresso meia bradesco' ? {...ticket, quantity: ticket.quantity + 1} : ticket)
-            }else{
-                return [...prev, {type: 'Ingresso meia bradesco', value: valorMeiaBradesco, quantity: 1 }];
-            }
-        }) 
-    }
+        const nextTicketMeiaBradesco = ticketMeiaBradesco + 1;
+        const nextSelectedTickets = addTicketSelection(selectedTickets, "Ingresso meia bradesco", valorMeiaBradesco);
+
+        setTicketMeiaBradesco(nextTicketMeiaBradesco);
+        setSelectedTickets(nextSelectedTickets);
+        persistPaymentDraft(getTicketQuantities({ ticketMeiaBradesco: nextTicketMeiaBradesco }), nextSelectedTickets);
+    };
 
     const removePriceBradesco = () => {
-        if(ticketMeiaBradesco > 0){
-            setTicketMeiaBradesco(ticketMeiaBradesco - 1);
-            setSelectedTickets((prev) => {
-                const bilhete = prev.find(ticket => ticket.type === 'Ingresso meia bradesco');
-                if(bilhete){
-                    if(bilhete.quantity - 1 > 0){
-                        return prev.map(ticket => ticket.type === 'Ingresso meia bradesco' ? {...ticket, quantity: ticket.quantity - 1}: ticket);
-                    }else{
-                        return prev.filter(ticket => ticket.type !== 'Ingresso meia bradesco')
-                    }
-                }
-                return prev;
-            })
-        }
-    }
- 
-    //MEIA ITAÚ
+        if (ticketMeiaBradesco <= 0) return;
+
+        const nextTicketMeiaBradesco = ticketMeiaBradesco - 1;
+        const nextSelectedTickets = removeTicketSelection(selectedTickets, "Ingresso meia bradesco");
+
+        setTicketMeiaBradesco(nextTicketMeiaBradesco);
+        setSelectedTickets(nextSelectedTickets);
+        persistPaymentDraft(getTicketQuantities({ ticketMeiaBradesco: nextTicketMeiaBradesco }), nextSelectedTickets);
+    };
+
     const addPriceItau = () => {
-        setTicketMeiaItau(ticketMeiaItau + 1)
-        setSelectedTickets((prev) => {
-            const bilhete = prev.find(ticket => ticket.type === 'Ingresso meia itaú');
-            if(bilhete){
-                return prev.map(ticket => ticket.type === 'Ingresso meia itaú' ? {...ticket, quantity: ticket.quantity + 1} : ticket)
-            }else{
-                return [...prev, {type: 'Ingresso meia itaú', value: valorMeiaItau, quantity: 1 }]
-            }
-        })
-    }
+        const nextTicketMeiaItau = ticketMeiaItau + 1;
+        const nextSelectedTickets = addTicketSelection(selectedTickets, "Ingresso meia itaÃº", valorMeiaItau);
+
+        setTicketMeiaItau(nextTicketMeiaItau);
+        setSelectedTickets(nextSelectedTickets);
+        persistPaymentDraft(getTicketQuantities({ ticketMeiaItau: nextTicketMeiaItau }), nextSelectedTickets);
+    };
 
     const removePriceItau = () => {
-        if(ticketMeiaItau > 0){
-            setTicketMeiaItau(ticketMeiaItau - 1);
-            setSelectedTickets((prev) => {
-                const bilhete = prev.find(ticket => ticket.type === 'Ingresso meia itaú');
-                if(bilhete){
-                    if(bilhete.quantity - 1 > 0){
-                        return prev.map(ticket => ticket.type === 'Ingresso meia itaú' ? {...ticket, quantity: ticket.quantity - 1}: ticket);
-                    }else{
-                        return prev.filter(ticket => ticket.type !== 'Ingresso meia itaú')
-                    }
-                }
-                return prev;
-            })
-        }
-    }
+        if (ticketMeiaItau <= 0) return;
 
-    //COMBOS
+        const nextTicketMeiaItau = ticketMeiaItau - 1;
+        const nextSelectedTickets = removeTicketSelection(selectedTickets, "Ingresso meia itaÃº");
+
+        setTicketMeiaItau(nextTicketMeiaItau);
+        setSelectedTickets(nextSelectedTickets);
+        persistPaymentDraft(getTicketQuantities({ ticketMeiaItau: nextTicketMeiaItau }), nextSelectedTickets);
+    };
+
     const addCombo = (combo: Combos) => {
-        setSelectedCombos(prev => {
-            const listCombos = prev.find(cmbo => cmbo.id === combo.id)
-            if(listCombos){
-                return prev.map(cmbo => cmbo.id === combo.id ? {...cmbo, quantity: cmbo.quantity + 1} : cmbo)
-            }else{
-                return [...prev, {...combo, quantity: 1}]
-            }
-        })
-    }
+        const existingCombo = selectedCombos.find((item) => item.id === combo.id);
+        const nextSelectedCombos = existingCombo
+            ? selectedCombos.map((item) => item.id === combo.id ? { ...item, quantity: item.quantity + 1 } : item)
+            : [...selectedCombos, { ...combo, quantity: 1 }];
+
+        setSelectedCombos(nextSelectedCombos);
+        persistPaymentDraft(getTicketQuantities(), selectedTickets, nextSelectedCombos);
+    };
 
     const removeCombo = (comboId: number) => {
-        setSelectedCombos(prev => {
-            const listCombo = prev.find(cmbo => cmbo.id === comboId)
-            if(listCombo){
-                if(listCombo.quantity > 1){
-                    return prev.map(cmbo => cmbo.id === comboId ? {...cmbo, quantity: cmbo.quantity - 1} : cmbo)
-                }else{
-                    return prev.filter(cmbo => cmbo.id !== comboId)
-                }
-            }
-            return prev
-        })
-    }
+        const existingCombo = selectedCombos.find((item) => item.id === comboId);
+        if (!existingCombo) return;
+
+        const nextSelectedCombos = existingCombo.quantity > 1
+            ? selectedCombos.map((item) => item.id === comboId ? { ...item, quantity: item.quantity - 1 } : item)
+            : selectedCombos.filter((item) => item.id !== comboId);
+
+        setSelectedCombos(nextSelectedCombos);
+        persistPaymentDraft(getTicketQuantities(), selectedTickets, nextSelectedCombos);
+    };
 
     useEffect(() => {
         const total = ticketInteira + ticketMeia + ticketMeiaBradesco + ticketMeiaItau;
         setTotalSeats(total);
     }, [ticketInteira, ticketMeia, ticketMeiaBradesco, ticketMeiaItau]);
 
-
-    // Soma ingressos de inteira + meia
     const inteiraPriceTotal = valorInteira * ticketInteira;
     const meiaPriceTotal = valorMeia * ticketMeia;
-
-    // Soma ingressos de parceiros de banco
     const meiaBradescoPriceTotal = valorMeiaBradesco * ticketMeiaBradesco;
     const meiaItauPriceTotal = valorMeiaItau * ticketMeiaItau;
 
-    // Soma as taxas 
     const taxaInteiraPriceTotal = valorTaxaInteira * ticketInteira;
-    const taxaMeiaPriceTotal = valorTaxaMeia * ticketMeia; 
-    const taxaBradescoPriceTotal = valorTaxaMeia * ticketMeiaBradesco; 
+    const taxaMeiaPriceTotal = valorTaxaMeia * ticketMeia;
+    const taxaBradescoPriceTotal = valorTaxaMeia * ticketMeiaBradesco;
     const taxaItauPriceTotal = valorTaxaMeia * ticketMeiaItau;
 
     const totalPrice = inteiraPriceTotal + meiaPriceTotal + meiaBradescoPriceTotal + meiaItauPriceTotal;
     const totalTaxa = taxaInteiraPriceTotal + taxaMeiaPriceTotal + taxaBradescoPriceTotal + taxaItauPriceTotal;
 
-    // Total de combos
-    const combosPriceTotal = Object.values(selectedCombos).reduce((acc, combo) => acc + (combo.price * combo.quantity),0);
+    const combosPriceTotal = Object.values(selectedCombos).reduce((acc, combo) => acc + (combo.price * combo.quantity), 0);
+    const combosTaxTotal = Object.values(selectedCombos).reduce((acc, combo) => acc + (combo.tax * combo.quantity), 0);
 
-    // Total de taxas dos combos
-    const combosTaxTotal = Object.values(selectedCombos).reduce((acc, combo) => acc + (combo.tax * combo.quantity),0);
-
-    //TOTAL
     const taxaTotal = combosTaxTotal + totalTaxa;
-    const total = totalPrice + combosPriceTotal+ taxaTotal;
+    const total = totalPrice + combosPriceTotal + taxaTotal;
 
-   
-    return(
+    return (
         <PaymentContext.Provider value={{
             valorInteira,
             valorMeia,
@@ -264,13 +247,11 @@ const PaymentProvider = ({ children }:{children: ReactNode}) => {
             valorMeiaItau,
             valorTaxaInteira,
             valorTaxaMeia,
-
             ticketInteira,
             ticketMeia,
             ticketMeiaBradesco,
             ticketMeiaItau,
             totalSeats,
-
             resetPayment,
             addPriceInteira,
             removePriceInteira,
@@ -281,20 +262,16 @@ const PaymentProvider = ({ children }:{children: ReactNode}) => {
             addPriceItau,
             removePriceItau,
             selectedTickets,
-
             selectedCombos,
             addCombo,
             removeCombo,
-
             total,
             taxaTotal,
             totalTaxa,
         }}>
-            {children} 
+            {children}
         </PaymentContext.Provider>
-    )
+    );
+};
 
-}
-
-// Exportação consistente no final do arquivo
-export { PaymentContext, PaymentProvider }
+export { PaymentContext, PaymentProvider };

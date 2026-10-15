@@ -1,6 +1,8 @@
 
 import { useState, useContext, useEffect } from "react"
 import { CheckCircle2, CircleAlert, X } from "lucide-react"
+import { CheckoutStep } from "../../types/Checkout"
+import { readCheckoutDraft, updateCheckoutDraft } from "../../utils/checkoutStorage"
 
 //components
 import Container from '../../components/Container'
@@ -27,26 +29,13 @@ const Seats = () => {
     const {totalSeats} = paymentContext;
     const {selectedSeats} = useContext(SeatContext);
     
-    const [step, setStep] = useState(1); 
+    const [step, setStep] = useState<CheckoutStep>(() => readCheckoutDraft()?.step ?? 1);
     const [showModal, setShowModal] = useState(false); 
     const [modalType, setModalType] = useState("");
 
     const {user} = useAuth();
 
     const progressPercentage = (step / 5) * 100;
-
-    // Recupera o step armazenado no localStorage, se existir
-    useEffect(() => {
-        const storedStep = localStorage.getItem("step");
-        if (storedStep) {
-            setStep(Number(storedStep)); // Converte para número e define o estado
-        }
-    }, []);
-
-    // Atualiza o localStorage sempre que o step mudar
-    useEffect(() => {
-        localStorage.setItem("step", step.toString());
-    }, [step]);
 
     // Função para validar se o usuário está logado
     const isUserLoggedIn = () => {
@@ -83,20 +72,16 @@ const Seats = () => {
             return;
         }
 
-        if (step < 5) setStep(step + 1); 
+        if (step < 5) setStep((step + 1) as CheckoutStep);
     }
 
     const handlePreviousStep = () => {
-        if (step > 1) setStep(step - 1); 
+        if (step > 1) setStep((step - 1) as CheckoutStep);
     }
 
 
     useEffect(() => {
-        if (step < 5) {
-            localStorage.setItem("step", step.toString());
-        } else {
-            localStorage.removeItem("step"); 
-        }
+        updateCheckoutDraft({ step });
     }, [step]);
 
     return (

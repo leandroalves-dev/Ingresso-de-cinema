@@ -1,5 +1,6 @@
 import { createContext, useState, ReactNode } from "react";
 import { MovieSelection } from "../types/Movies";
+import { readCheckoutDraft, updateCheckoutDraft } from "../utils/checkoutStorage";
 
 // Tipo para o contexto do filme
 interface MovieContextType {
@@ -15,10 +16,16 @@ const MovieContext = createContext<MovieContextType>({
 });
 
 export const MovieProvider = ({ children }: { children: ReactNode }) => {
-    const [selectedMovie, setSelectedMovie] = useState<MovieSelection | null>(null);
+    const [selectedMovie, setSelectedMovieState] = useState<MovieSelection | null>(() => readCheckoutDraft()?.selectedMovie ?? null);
+
+    const setSelectedMovie = (movieSelection: MovieSelection) => {
+        setSelectedMovieState(movieSelection);
+        updateCheckoutDraft({ selectedMovie: movieSelection });
+    };
 
     const resetMovieSelection = () => {
-        setSelectedMovie(null);
+        setSelectedMovieState(null);
+        updateCheckoutDraft({ selectedMovie: null });
     };
 
     return (
