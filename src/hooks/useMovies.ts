@@ -1,54 +1,76 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
 import { getMovies, getCombos, getPrices, getNews } from "../services/movieServices";
 import { Movie } from "../types/Movies";
 import { Combos } from "../types/Combos";
 import { Prices } from "../types/Prices";
 import { News } from "../types/News";
 
+interface MoviesState {
+    movies: Movie[];
+    combos: Combos[];
+    prices: Prices | null;
+    news: News[];
+}
+
+let cachedMoviesState: MoviesState | null = null;
+let moviesRequest: Promise<MoviesState> | null = null;
+
+const loadMoviesState = (): Promise<MoviesState> => {
+    if (cachedMoviesState) return Promise.resolve(cachedMoviesState);
+    if (moviesRequest) return moviesRequest;
+
+    moviesRequest = Promise.all([getMovies(), getCombos(), getPrices(), getNews()])
+        .then(([moviesResponse, combosResponse, priceResponse, newsResponse]) => {
+            const state: MoviesState = {
+                movies: moviesResponse?.movies || [],
+                combos: combosResponse?.combos || [],
+                prices: priceResponse || null,
+                news: newsResponse?.movieNews || [],
+            };
+
+            cachedMoviesState = state;
+            return state;
+        })
+        .finally(() => {
+            moviesRequest = null;
+        });
+
+    return moviesRequest;
+};
+
 export function useMovies() {
-    const [movies, setMovies] = useState<Movie[]>([]);
-    const [combos, setCombos] = useState<Combos[]>([]);
-    const [prices, setPrices] = useState<Prices | null>(null);
-    const [news, setNews] = useState<News[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [state, setState] = useState<MoviesState | null>(cachedMoviesState);
+    const [loading, setLoading] = useState(!cachedMoviesState);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        let isMounted = true; 
+        let isMounted = true;
 
-        const fetchMovies = async () => {
-            try {
-                const [moviesResponse, combosResponse, priceResponse, newsResponse] = await Promise.all([
-                    getMovies(),
-                    getCombos(),
-                    getPrices(),
-                    getNews(),
-                ]);
-
-                if (isMounted) {
-                    setMovies(moviesResponse?.movies || []);
-                    setCombos(combosResponse?.combos || []);
-                    setPrices(priceResponse || null);
-                    setNews(newsResponse?.movieNews || []);
-                }
-            } catch (err) {
-                if (isMounted) {
-                    setError("Erro ao carregar os filmes.");
-                }
+        loadMoviesState()
+            .then((nextState) => {
+                if (!isMounted) return;
+                setState(nextState);
+                setLoading(false);
+            })
+            .catch((err) => {
+                if (!isMounted) return;
+                setError("Erro ao carregar os filmes.");
+                setLoading(false);
                 console.error("Erro ao buscar dados:", err);
-            } finally {
-                if (isMounted) {
-                    setLoading(false);
-                }
-            }
-        };
-
-        fetchMovies();
+            });
 
         return () => {
-            isMounted = false; // Cancela atualizações se o componente desmontar
+            isMounted = false;
         };
     }, []);
 
-    return { movies, combos, prices, news, loading, error };
+    return {
+        movies: state?.movies || [],
+        combos: state?.combos || [],
+        prices: state?.prices || null,
+        news: state?.news || [],
+        loading,
+        error,
+    };
 }

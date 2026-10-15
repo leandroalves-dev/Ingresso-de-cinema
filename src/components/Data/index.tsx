@@ -15,10 +15,12 @@ const Data = ({ onFilterMovies }: DataProps) => {
     const [selectedMonth, setSelectedMonth] = useState(() => formatMonthKey(referenceDate));
     const [days, setDays] = useState<number[]>([]);
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
-    const { movies } = useMovies();
+    const { movies, loading } = useMovies();
     const months = getFutureMonths(referenceDate);
 
     useEffect(() => {
+        if (loading) return;
+
         const availableDays = getAvailableDaysInMonth(movies, selectedMonth, referenceDate);
         const firstDay = availableDays[0] ?? null;
         setDays(availableDays);
@@ -36,7 +38,7 @@ const Data = ({ onFilterMovies }: DataProps) => {
         }
 
         onFilterMovies(getMoviesForDate(movies, date), date);
-    }, [movies, onFilterMovies, referenceDate, selectedMonth]);
+    }, [loading, movies, onFilterMovies, referenceDate, selectedMonth]);
 
     const handleSelectDay = (day: number) => {
         const date = getDateForMonth(selectedMonth, day);
@@ -45,9 +47,11 @@ const Data = ({ onFilterMovies }: DataProps) => {
         onFilterMovies(getMoviesForDate(movies, date), date);
     };
 
+    if (loading) return null;
+
     return (
         <div className="relative">
-            <div className="flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-end">
+            <div className="programming-toolbar flex items-center justify-between gap-4">
                 <div>
                     <p className="section-eyebrow mb-2">Agenda de sessões</p>
                     <h1 className="text-2xl font-semibold tracking-tight text-[#f7f7f7] sm:text-3xl">Programação</h1>

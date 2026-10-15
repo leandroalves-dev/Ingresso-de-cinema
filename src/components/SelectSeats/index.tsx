@@ -1,9 +1,7 @@
 import { useContext } from "react";
 
-// Icons
 import { BsArrows, BsBan, BsCircleFill, BsPersonFillSlash, BsPersonWheelchair } from "react-icons/bs";
 
-// Contexto de assentos
 import { SeatContext } from "../../context/SeatContext";
 
 const SelectSeats = () => {
@@ -14,68 +12,70 @@ const SelectSeats = () => {
     }
 
     const { selectedSeats, toggleSeat } = seatContext;
-
-    // Definindo as filas e o número de assentos por fila
-    const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+    const rows = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
     const seatsPerRow = 18;
 
     return (
-        <div className="relative p-5">
-            {rows.map(row => (
-                <div key={row} className='flex items-center justify-center mb-2.5'>
-                    <span className='mr-3 text-white text-[12px]'>{row}</span>
-                    {Array.from({ length: seatsPerRow }, (_, seatIndex) => {
-                        const seatNumber = `${row}-${seatIndex + 1}`; // Gera o assento com letra e número
+        <div className="seat-selection-page relative p-5">
+            <header className="seat-selection-header">
+                <p className="seat-selection-eyebrow">Mapa da sala</p>
+                <h1>Escolha seus assentos</h1>
+                <p>Selecione os lugares para continuar com a sua experiência CineSphere.</p>
+            </header>
 
-                        // Condição para adicionar assentos vazios após a poltrona 3 e 13
-                        const isEmptySeat = (seatIndex === 3 || seatIndex === 13);
+            <div className="seat-map-panel">
+                <div className="seat-map-label">Frente da sala</div>
+                <div className="seat-map" aria-label="Mapa de assentos">
+                    {rows.map((row) => (
+                        <div key={row} className="seat-row flex items-center justify-center mb-2.5">
+                            <span className="seat-row-label seat-row-label-left">{row}</span>
+                            {Array.from({ length: seatsPerRow }, (_, seatIndex) => {
+                                const seatNumber = `${row}-${seatIndex + 1}`;
+                                const isEmptySeat = seatIndex === 3 || seatIndex === 13;
+                                const isReservedForWheelchair = row === "J" && ((seatIndex >= 4 && seatIndex <= 6) || (seatIndex >= 11 && seatIndex <= 13));
+                                const isReservedForObese = row === "J" && (seatIndex === 0 || seatIndex === 3 || seatIndex === 14 || seatIndex === 17);
+                                const isSelected = selectedSeats.includes(seatNumber);
 
-                        // Condição para assentos reservados para cadeirantes
-                        const isReservedForWheelchair = (row === 'J' && (seatIndex >= 4 && seatIndex <= 6 || seatIndex >= 11 && seatIndex <= 13));
-
-                        // Condição para assentos reservados para obesos
-                        const isReservedForObese = (row === 'J' && (seatIndex === 0 || seatIndex === 3 || seatIndex === 14 || seatIndex === 17));
-
-                        return (
-                            <div key={seatNumber} >
-                                {isEmptySeat ? (
-                                    <button className="bg-transparent cursor-auto w-[30px] h-[15px]" disabled />
-                                ) : (
-                                <button 
-                                    onClick={() => toggleSeat(seatNumber)} className={`${selectedSeats.includes(seatNumber) ? "bg-green-800" : "bg-[#292929]"} 
-                                    mr-1 mb-1 bg-[#292929] hover:bg-green-900 transition delay-75 text-white rounded-[3px] text-[10px] flex items-center justify-center cursor-pointer w-[30px] h-[25px] max-sm:w-[18px] max-lg:w-[22px]`}
-                                >
-                                    {isReservedForWheelchair ? (
-                                        <BsPersonWheelchair />
-                                    ) : isReservedForObese ? (
-                                        <BsArrows />
-                                    ) : (
-                                        seatNumber.replace(/[^0-9]/g, '')
-                                    )}
-                                </button>
-                                )}
-                            </div>
-                        );
-                    })}
-                    <span className='ml-3 text-white text-[12px] w-[15px] h-[15px]'>{row}</span>
+                                return (
+                                    <div key={seatNumber}>
+                                        {isEmptySeat ? (
+                                            <button className="seat-gap cursor-auto" disabled aria-hidden="true" />
+                                        ) : (
+                                            <button
+                                                type="button"
+                                                onClick={() => toggleSeat(seatNumber)}
+                                                aria-label={`Assento ${seatNumber}`}
+                                                aria-pressed={isSelected}
+                                                className={`cinema-seat ${isSelected ? "is-selected" : ""}`}
+                                            >
+                                                {isReservedForWheelchair ? <BsPersonWheelchair aria-hidden="true" /> : isReservedForObese ? <BsArrows aria-hidden="true" /> : seatIndex + 1}
+                                            </button>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                            <span className="seat-row-label seat-row-label-right">{row}</span>
+                        </div>
+                    ))}
                 </div>
-            ))}
 
-            <div className="perspective-[750px]">
-                <div className="text-center text-white my-6 bg-[#161616] py-2 px-0.5 transform rotate-x-[10deg]">
-                    TELA
-                </div>
             </div>
 
-            <div className="border-t-1 border-t-neutral-800 pt-6 mt-8">
-                <h2 className="text-white mb-7">Legenda</h2>
-                <ul className="flex flex-wrap gap-5 text-neutral-400 text-[14px]">
-                    <li className='flex gap-2 items-center'><BsCircleFill className="text-neutral-700" /> Disponível</li>
-                    <li className='flex gap-2 items-center'><BsCircleFill className="text-green-800" /> Selecionado</li>
-                    <li className="flex gap-2 items-center"><BsPersonFillSlash /> Ocupado</li>
-                    <li className="flex gap-2 items-center"><BsBan /> Bloqueado</li>
-                    <li className="flex gap-2 items-center"><BsPersonWheelchair /> Cadeirante</li>
-                    <li className="flex gap-2 items-center"><BsArrows /> Obeso</li>
+            <div className="seat-legend">
+                <div className="seat-legend-heading">
+                    <div>
+                        <p className="seat-selection-eyebrow">Orientação</p>
+                        <h2>Legenda</h2>
+                    </div>
+                    <span>{selectedSeats.length} selecionado(s)</span>
+                </div>
+                <ul>
+                    <li><BsCircleFill className="seat-legend-available" aria-hidden="true" /> Disponível</li>
+                    <li><BsCircleFill className="seat-legend-selected" aria-hidden="true" /> Selecionado</li>
+                    <li><BsPersonFillSlash aria-hidden="true" /> Ocupado</li>
+                    <li><BsBan aria-hidden="true" /> Bloqueado</li>
+                    <li><BsPersonWheelchair aria-hidden="true" /> Cadeirante</li>
+                    <li><BsArrows aria-hidden="true" /> Obeso</li>
                 </ul>
             </div>
         </div>

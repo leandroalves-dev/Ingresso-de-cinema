@@ -61,28 +61,33 @@ const TicketPrices = ({maxSeats}: TicketPriceProps) => {
     ];
 
     return (
-        <div className="p-5 text-white">
-            <h1 className="text-[26px] font-bold mb-5">Escolha a forma de pagamento</h1>
+        <section className="ticket-prices-page text-white" aria-labelledby="ticket-prices-title">
+            <header className="ticket-prices-header">
+                <p className="ticket-prices-eyebrow">Sua sessão · etapa 2 de 5</p>
+                <h1 id="ticket-prices-title">Escolha a forma de pagamento</h1>
+                <p>Selecione a quantidade de ingressos para os assentos escolhidos.</p>
+            </header>
 
-            <div className="flex flex-col gap-12">
-
-                {tickets.map((ticket, index) => (
-                    <div key={index} className="flex justify-between items-center">
-                        <div className="flex items-center gap-3">
-                            <div><BsTicketPerforated size={28} color="#990000" /></div>
+            <div className="ticket-prices-list">
+                {tickets.map((ticket) => (
+                    <article key={ticket.name} className="ticket-price-card">
+                        <div className="ticket-price-info">
+                            <div className="ticket-price-icon" aria-hidden="true">
+                                <BsTicketPerforated size={23} />
+                            </div>
                             <div>
-                                <p>{ticket.name}</p>
-                                <span className="text-[12px]">R$ {ticket.price.toFixed(2)} + taxa de R$ {ticket.tax.toFixed(2)}</span>
+                                <h2>{ticket.name}</h2>
+                                <p>
+                                    <span>R$ {ticket.price.toFixed(2)}</span>
+                                    <span>Taxa de R$ {ticket.tax.toFixed(2)}</span>
+                                </p>
                             </div>
                         </div>
                         <QuantityButtons quantity={ticket.quantity} onIncrement={ticket.onIncrement} onDecrement={ticket.onDecrement} disabled={isMaxSeats} />
-                    </div>
+                    </article>
                 ))}
-
-                
             </div>
-
-        </div>
+        </section>
     )
 }
 

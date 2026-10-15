@@ -17,43 +17,41 @@ const Combos = () => {
     const {combos} = useMovies()
 
     return (
-        <div className="p-5 text-white">
-            <h1 className="text-[26px] font-bold mb-5">Que tal uma pipoca, bebida ou doce pra acompanhar o filme?</h1>
+        <section className="combos-page text-white" aria-labelledby="combos-title">
+            <header className="combos-header">
+                <p className="combos-eyebrow">Sua experiência · etapa 3 de 5</p>
+                <h1 id="combos-title">Que tal uma pipoca, bebida ou doce pra acompanhar o filme?</h1>
+                <p>Escolha seus favoritos e deixe sua sessão ainda mais especial.</p>
+            </header>
 
-            <div className="mt-10 grid lg:grid-cols-2 gap-4 md:grid-cols-1">
-
-                {combos.map(combo => (
-                    <div key={combo.id} className="flex p-2 bg-neutral-900 border-1 border-neutral-800">
-                        <div className="mr-5">
-                            <div className="w-16">
-                                <img src={combo.imagem} alt={combo.title} />
+            <div className="combos-grid">
+                {combos.map((combo) => (
+                    <article key={combo.id} className="combo-card">
+                        <div className="combo-card-media">
+                            <img src={combo.imagem} alt={combo.title} />
+                        </div>
+                        <div className="combo-card-content">
+                            <div className="combo-card-heading">
+                                <h2>{combo.title}</h2>
+                                <span aria-hidden="true">CineSphere</span>
+                            </div>
+                            <p className="combo-card-description">{combo.description}</p>
+                            <div className="combo-card-footer">
+                                <div className="combo-card-price">
+                                    <strong>R$ {combo.price.toFixed(2)}</strong>
+                                    <span>+ taxa de R$ {combo.tax.toFixed(2)}</span>
+                                </div>
+                                <QuantityButtons
+                                    quantity={selectedCombos.find((cmbo) => cmbo.id === combo.id)?.quantity || 0}
+                                    onIncrement={() => addCombo(combo)}
+                                    onDecrement={() => removeCombo(combo.id)}
+                                />
                             </div>
                         </div>
-                        <div className="w-full">
-                            <div>
-                                <h2 className="text-neutral-200 text-[20px] mb-2">{combo.title}</h2>
-                                <p className="text-[14px] text-neutral-400 leading-5 mb-2">{combo.description}</p>
-                            </div>
-                            <div className="flex justify-between items-center">
-                                <div className="text-[#b09513] flex flex-col leading-5 mt-2">
-                                    <span className="text-[14px] leading-3">R$ {combo.price.toFixed(2)}</span>
-                                    <span className="text-[12px]">+ taxa de R$ {combo.tax.toFixed(2)}</span>
-                                </div>
-                                <div>
-                                    <QuantityButtons
-                                        quantity={selectedCombos.find(cmbo => cmbo.id === combo.id)?.quantity || 0}
-                                        onIncrement={() => addCombo(combo)}
-                                        onDecrement={() => removeCombo(combo.id)}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </article>
                 ))}
-                
             </div>
-        
-        </div>
+        </section>
     )
 }
 

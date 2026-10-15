@@ -16,10 +16,10 @@ const Footer = () => (
                         {footerLinks.map((link) => <li key={link}><a href="#" className="transition-colors hover:text-white">{link}</a></li>)}
                     </ul>
                 </nav>
-                <ul className="mb-8 flex flex-wrap justify-center gap-5 text-xs text-[#b9b9b9]">
-                    <li><a href="#" className="inline-flex items-center gap-2 hover:text-white"><Facebook size={14} /> Facebook</a></li>
-                    <li><a href="#" className="inline-flex items-center gap-2 hover:text-white"><Instagram size={14} /> Instagram</a></li>
-                    <li><a href="#" className="inline-flex items-center gap-2 hover:text-white"><Youtube size={14} /> Youtube</a></li>
+                <ul className="footer-social-links mb-8 flex flex-wrap justify-center gap-5 text-xs text-[#b9b9b9]">
+                    <li><a href="#" className="inline-flex items-center gap-2 hover:text-white"><Facebook className="footer-social-icon" size={14} /> Facebook</a></li>
+                    <li><a href="#" className="inline-flex items-center gap-2 hover:text-white"><Instagram className="footer-social-icon" size={14} /> Instagram</a></li>
+                    <li><a href="#" className="inline-flex items-center gap-2 hover:text-white"><Youtube className="footer-social-icon" size={14} /> Youtube</a></li>
                 </ul>
                 <div className="w-full border-t border-white/10 pt-5 text-xs text-[#818181]">
                     <address className="not-italic">&copy; Copyright - Todos os direitos reservados - 2025</address>

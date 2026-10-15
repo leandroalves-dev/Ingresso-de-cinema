@@ -1,5 +1,6 @@
 
 import { useState, useContext, useEffect } from "react"
+import { CheckCircle2, CircleAlert, X } from "lucide-react"
 
 //components
 import Container from '../../components/Container'
@@ -102,11 +103,18 @@ const Seats = () => {
         <Container>
 
             {/* Barra de progresso */}
-            <div className='relative h-full w-full bg-[#990000] rounded-[50px] my-5 inset-shadow-red-800 overflow-hidden'>
-                <div className='h-2.5 w-0 bg-[#cb0e0e] rounded-[50px] transition delay-100 ease-in-out' style={{ width: `${progressPercentage}%` }}></div>
+            <div
+                className="checkout-progress"
+                role="progressbar"
+                aria-label="Progresso da compra"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={progressPercentage}
+            >
+                <div className="checkout-progress-fill" style={{ width: `${progressPercentage}%` }} />
             </div>
 
-            <div className="flex w-full flex-col md:flex-row gap-12">
+            <div className="flex w-full flex-col md:flex-row gap-12 mb-5">
                 <div className="md:w-3/5 bg-[#141414]">
 
                     {step === 1 && (
@@ -129,7 +137,9 @@ const Seats = () => {
                 
                 <div className="md:w-2/5 bg-neutral-800">
                     {step >= 5 ? (
-                        <div className="flex flex-col justify-center text-center text-white items-center w-full h-full max-md:h-52">
+                        <div className="order-complete-panel flex flex-col justify-center text-center text-white items-center w-full h-full max-md:h-52">
+                            <div className="order-complete-icon"><CheckCircle2 size={34} /></div>
+                            <p className="order-complete-eyebrow">Compra confirmada</p>
                             <h2 className="text-2xl md:text-2xl lg:text-3xl px-6">Pedido finalizado com sucesso!</h2>
                             <p className="text-base md:text-lg lg:text-xl px-6">Obrigado por sua compra. Aproveite o filme!</p>
                         </div>
@@ -140,23 +150,32 @@ const Seats = () => {
             </div>
 
             {showModal && modalType === "seats" && (
-                <Modal title='Opsss!'>
-                    <button className="absolute top-0 right-0 text-white bg-red-800 px-2 pb-1 text-xl" onClick={() => setShowModal(false)}>x</button>
-                    <h2 className="text-[18px] leading-5 mb-4">Por favor, selecione pelo menos um assento.</h2>
+                <Modal title='Opsss!' className="seat-feedback-modal">
+                    <button type="button" className="seat-feedback-close absolute right-5 top-5" onClick={() => setShowModal(false)} aria-label="Fechar aviso"><X size={18} /></button>
+                    <div className="seat-feedback-message">
+                        <CircleAlert className="seat-feedback-icon" size={22} aria-hidden="true" />
+                        <p>Por favor, selecione pelo menos um assento.</p>
+                    </div>
                 </Modal>
             )}
 
             {showModal && modalType === "tickets" && (
-                <Modal title='Opsss!'>
-                    <button className="absolute top-0 right-0 text-white bg-red-800 px-2 pb-1 text-xl" onClick={() => setShowModal(false)}>x</button>
-                    <h2 className="text-[18px] leading-5 mb-4">A quantidade de ingressos não corresponde ao número de assentos selecionados.</h2>
+                <Modal title='Opsss!' className="seat-feedback-modal">
+                    <button type="button" className="seat-feedback-close absolute right-5 top-5" onClick={() => setShowModal(false)} aria-label="Fechar aviso"><X size={18} /></button>
+                    <div className="seat-feedback-message">
+                        <CircleAlert className="seat-feedback-icon" size={22} aria-hidden="true" />
+                        <p>A quantidade de ingressos não corresponde ao número de assentos selecionados.</p>
+                    </div>
                 </Modal>
             )}
 
             {showModal && modalType === "login" && (
-                <Modal title='Opsss!'>
-                    <button className="absolute top-0 right-0 text-white bg-red-800 px-2 pb-1 text-xl" onClick={() => setShowModal(false)}>x</button>
-                    <h2 className="text-[18px] leading-6 mb-4">Você precisa estar logado para continuar.</h2>
+                <Modal title='Opsss!' className="seat-feedback-modal">
+                    <button type="button" className="seat-feedback-close absolute right-5 top-5" onClick={() => setShowModal(false)} aria-label="Fechar aviso"><X size={18} /></button>
+                    <div className="seat-feedback-message">
+                        <CircleAlert className="seat-feedback-icon" size={22} aria-hidden="true" />
+                        <p>Você precisa estar logado para continuar.</p>
+                    </div>
                 </Modal>
             )}
 

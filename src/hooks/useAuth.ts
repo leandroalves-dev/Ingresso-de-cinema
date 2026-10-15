@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getStoredUser } from "../utils/authStorage";
 
 const useAuth = () => {
 
@@ -14,11 +15,8 @@ const useAuth = () => {
 
     // Carregar usuário do localStorage ao iniciar
     useEffect(() => {
-        const dadosUser = localStorage.getItem("User");
-        if (dadosUser) {
-            const storedUser = JSON.parse(dadosUser);
-            setUser(storedUser.name); 
-        }
+        const storedUser = getStoredUser();
+        if (storedUser) setUser(storedUser.name);
         
     }, []);
    
@@ -57,15 +55,13 @@ const useAuth = () => {
             return;
         }
 
-        const userDados = localStorage.getItem("User");
+        const user = getStoredUser();
 
-        if (!userDados) {
+        if (!user) {
             setError("Usuário não encontrado");
             setSuccess("");
             return;
         }
-
-        const user = JSON.parse(userDados);
 
         if (user.email !== email || user.password !== password) {
             setError("E-mail ou senha inválidos");

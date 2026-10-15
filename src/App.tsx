@@ -1,3 +1,4 @@
+    import { useEffect } from 'react'
     import './App.css'
 
     import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -22,6 +23,10 @@
 
 
     function App() {
+        useEffect(() => {
+            document.getElementById('app-boot-loader')?.remove()
+        }, [])
+
         return (
             <MovieProvider>
                 <PaymentProvider>
