@@ -1,12 +1,21 @@
-.slick-dots{
-    margin-top: 10px !important;
+.slick-dots {
+    bottom: -2rem;
 }
 
-.slick-dots li button:before{
-    color: #FFF !important;
-    font-size: 0.8rem !important;
+.slick-dots li {
+    margin: 0 2px;
 }
 
-.slick-dots li.slick-active button:before{
-    color: #990000 !important;
+.slick-dots li button:before {
+    color: #818181 !important;
+    font-size: 0.55rem !important;
+    opacity: 1 !important;
+}
+
+.slick-dots li.slick-active button:before {
+    color: #ff252d !important;
+}
+
+.slick-list {
+    overflow: visible;
 }

@@ -26,19 +26,22 @@
             <MovieProvider>
                 <PaymentProvider>
                     <SeatProvider>
-                        <div className='flex flex-col min-h-screen bg-[#111]'>
+                        <div className='cine-app-shell min-h-screen'>
+                            <div className='cinematic-atmosphere' aria-hidden='true' />
                             <BrowserRouter>
-                                <Header />
-                                <Routes>
-                                    <Route path='/' element={<Home />} />
-                                    <Route path='/about' element={<About />} />
-                                    <Route path='/price' element={<Price />} />
-                                    <Route path='/sale' element={<Sale />} />
-                                    <Route path='/seats' element={<Seats />} />
-                                    <Route path='/details-news/:id' element={<DetailsNews />} />
-                                    <Route path='/details-movies/:id' element={<DetailsMovies />} />
-                                </Routes>
-                                <Footer />
+                                <div className='relative z-10 flex min-h-screen flex-col'>
+                                    <Header />
+                                    <Routes>
+                                        <Route path='/' element={<Home />} />
+                                        <Route path='/about' element={<About />} />
+                                        <Route path='/price' element={<Price />} />
+                                        <Route path='/sale' element={<Sale />} />
+                                        <Route path='/seats' element={<Seats />} />
+                                        <Route path='/details-news/:id' element={<DetailsNews />} />
+                                        <Route path='/details-movies/:id' element={<DetailsMovies />} />
+                                    </Routes>
+                                    <Footer />
+                                </div>
                             </BrowserRouter>
                         </div>
                     </SeatProvider>

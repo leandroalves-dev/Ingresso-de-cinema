@@ -1,66 +1,47 @@
-import { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useContext, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { LockKeyhole, LogIn, LogOut, Menu, UserRound, X } from "lucide-react";
 
-//Logo Img
-import Logo from '../../assets/logo.png';
+import Logo from "../../assets/logo.png";
+import Container from "../Container";
+import Modal from "../Modal";
+import Register from "../../pages/Login/Register";
+import Logar from "../../pages/Login/Logar";
+import useAuth from "../../hooks/useAuth";
+import { SeatContext } from "../../context/SeatContext";
+import { PaymentContext } from "../../context/PaymentContext";
 
-//icons
-import { BsLock, BsPersonFill, BsJustify, BsX } from 'react-icons/bs';
-
-//components
-import Container from '../Container';
-import Modal from '../Modal';
-import Register from '../../pages/Login/Register';
-import Logar from '../../pages/Login/Logar';
-
-//hooks
-import useAuth from '../../hooks/useAuth';
-
-//context api
-import { SeatContext } from '../../context/SeatContext';
-import { PaymentContext } from '../../context/PaymentContext';
+const navigation = [
+    { label: "Home", to: "/" },
+    { label: "Quem Somos", to: "/about" },
+    { label: "Preços", to: "/price" },
+    { label: "Promoções", to: "/sale" },
+];
 
 const Header = () => {
-
     const paymentContext = useContext(PaymentContext);
-    if(!paymentContext) throw new Error('Erro no provider');
-    
-    const {resetPayment} = paymentContext;
-    const {resetSeat} = useContext(SeatContext);
+    if (!paymentContext) throw new Error("Erro no provider");
 
+    const { resetPayment } = paymentContext;
+    const { resetSeat } = useContext(SeatContext);
+    const { user, setUser } = useAuth();
+    const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
-    const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState<string | null>(null);
 
-    const { user, setUser } = useAuth();
+    const handleReset = () => {
+        resetSeat();
+        resetPayment();
+    };
 
-    const navigate = useNavigate();
-
-    console.log(showModal)
-
-    const handleRegister = () => {
-        setShowModal(true);
-        setModalType('register')
-
-        if(menuOpen){
-            setMenuOpen(false)
-        }
-    }
-
-    const handleLogin = () => {
-        setShowModal(true);
-        setModalType('login')
-
-        if(menuOpen){
-            setMenuOpen(false)
-        }
-    }
+    const openModal = (type: "register" | "login") => {
+        setModalType(type);
+        setMenuOpen(false);
+    };
 
     const handleSuccess = () => {
-        setShowModal(false);
         setModalType(null);
-        
-        const storedUser = localStorage.getItem("User") 
+        const storedUser = localStorage.getItem("User");
         if (storedUser) {
             const userData = JSON.parse(storedUser);
             setUser(`${userData.name}`);
@@ -68,111 +49,85 @@ const Header = () => {
     };
 
     const handleLogout = () => {
-        setUser('')
-        localStorage.removeItem('User');
-
-        const stepStorage = localStorage.getItem('step');
-        if(stepStorage){
-            navigate('/');
-        }
-    }
-
-    const handleReset = () => {
-        resetSeat();
-        resetPayment();
-    }
+        setUser("");
+        localStorage.removeItem("User");
+        if (localStorage.getItem("step")) navigate("/");
+    };
 
     return (
         <>
-            <header className='bg-[#141414] border-b-neutral-950 border-b-2'>
-            
-                <div className='bg-neutral-950 p-3 hidden md:flex'>
+            <header className="relative z-40 border-b border-white/[0.08] bg-[#0b0c0c]/88 backdrop-blur-md">
+                <div className="border-b border-white/[0.06] bg-black/30">
                     <Container>
-                        <ul className='flex flex-row justify-end gap-5 text-white w-full'>
+                        <div className="flex min-h-9 items-center justify-end gap-5 text-xs text-[#b9b9b9]">
                             {user ? (
                                 <>
-                                    <li>Olá {user}</li>
-                                    <li className='cursor-pointer hover:underline' onClick={handleLogout}>Sair</li>
+                                    <span className="text-[#f7f7f7]">Olá, {user}</span>
+                                    <button className="inline-flex items-center gap-1.5 hover:text-white" onClick={handleLogout}><LogOut size={14} /> Sair</button>
                                 </>
                             ) : (
                                 <>
-                                    <li>Olá Visitante</li>
-                                    <li className='flex items-center gap-1.5 cursor-pointer hover:underline' onClick={handleRegister}><BsLock /> Cadastrar</li>
-                                    <li className='flex items-center gap-1.5 cursor-pointer hover:underline' onClick={handleLogin}><BsPersonFill /> Entrar</li>
+                                    <span>Olá, visitante</span>
+                                    <button className="inline-flex items-center gap-1.5 hover:text-white" onClick={() => openModal("register")}><LockKeyhole size={14} /> Cadastrar</button>
+                                    <button className="inline-flex items-center gap-1.5 hover:text-white" onClick={() => openModal("login")}><UserRound size={14} /> Entrar</button>
                                 </>
                             )}
-                            
-                        </ul>
+                        </div>
                     </Container>
                 </div>
 
                 <Container>
-                    <div className='flex justify-between items-center h-40 md:w-full max-md:justify-center'>
-                        
-                        <div>
-                            <Link to='/' onClick={handleReset}>
-                                <img className='w-80 h-auto' src={Logo} alt='CineSphere - A diversão começa aqui' />
-                            </Link>     
-                        </div>
+                    <div className="neon-divider" />
+                    <div className="flex min-h-[100px] items-center justify-between gap-8 py-4 md:min-h-[128px]">
+                        <Link to="/" onClick={handleReset} className="shrink-0" aria-label="CineSphere - página inicial">
+                            <img className="w-52 sm:w-64 md:w-72" src={Logo} alt="CineSphere - A diversão começa aqui" />
+                        </Link>
 
-                        <div className='md:hidden absolute top-2.5 left-2.5 '>
-                            <button onClick={() => setMenuOpen(!menuOpen)}>
-                                {!menuOpen && (
-                                    <BsJustify size={30} className='text-white' />
-                                )}
-                            </button>
-                        </div>
-                        
-                        <nav className='hidden md:flex'>
-                            <ul className='flex gap-8 text-white text-lg'>
-                                <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
-                                <li><Link to="/about" onClick={() => setMenuOpen(false)}>Quem Somos</Link></li>
-                                <li><Link to="/price" onClick={() => setMenuOpen(false)}>Preços</Link></li>
-                                <li><Link to="/sale" onClick={() => setMenuOpen(false)}>Promoções</Link></li>
+                        <nav className="hidden md:flex" aria-label="Navegação principal">
+                            <ul className="flex items-center gap-7 text-sm font-semibold text-[#b9b9b9] lg:gap-9">
+                                {navigation.map((item) => (
+                                    <li key={item.to}>
+                                        <NavLink to={item.to} end={item.to === "/"} className={({ isActive }) => `relative py-3 transition-colors hover:text-white ${isActive ? "text-white after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-[#ff252d] after:shadow-[0_0_10px_rgba(255,37,45,0.8)]" : ""}`}>
+                                            {item.label}
+                                        </NavLink>
+                                    </li>
+                                ))}
                             </ul>
-                        </nav> 
+                        </nav>
 
-                        <div className={`fixed top-0 right-0 w-64 h-full bg-neutral-900 z-99  transform ${menuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out md:hidden`}>
-                            <button className="absolute top-4 right-4 text-white" onClick={() => setMenuOpen(false)}>
-                                <BsX size={30} />
-                            </button>
-                            <ul className='text-white bg-gray-800 p-6'>
-                                {user ? (
-                                    <>
-                                        <li>Olá {user}</li>
-                                        <li className='cursor-pointer hover:underline' onClick={handleLogout}>Sair</li>
-                                    </>
-                                ) : (
-
-                                    <>
-                                        <li className='mb-3'>Olá Visitante</li>
-                                        <li className='flex items-center gap-1.5 mb-3' onClick={handleRegister}><BsLock /> Cadastrar</li>
-                                        <li className='flex items-center gap-1.5' onClick={handleLogin}><BsPersonFill /> Entrar</li>
-                                    </>
-                                )}
-                            </ul>
-                            <ul className="flex flex-col gap-2 p-6 text-white text-lg">                            
-                                <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
-                                <li><Link to="/about" onClick={() => setMenuOpen(false)}>Quem Somos</Link></li>
-                                <li><Link to="/price" onClick={() => setMenuOpen(false)}>Preços</Link></li>
-                                <li><Link to="/sale" onClick={() => setMenuOpen(false)}>Promoções</Link></li>
-                            </ul>
-                        </div>
-                    
+                        <button type="button" className="inline-flex size-11 items-center justify-center rounded-sm border border-white/10 text-white hover:border-[#32dfff]/70 hover:text-[#32dfff] md:hidden" onClick={() => setMenuOpen(true)} aria-label="Abrir menu" aria-expanded={menuOpen}>
+                            <Menu size={22} />
+                        </button>
                     </div>
                 </Container>
-                
+
+                {menuOpen && <button className="fixed inset-0 z-40 bg-black/70 md:hidden" onClick={() => setMenuOpen(false)} aria-label="Fechar menu" />}
+                <aside className={`fixed right-0 top-0 z-50 flex h-full w-[min(86vw,340px)] flex-col border-l border-white/10 bg-[#101111] p-6 shadow-2xl transition-transform duration-200 md:hidden ${menuOpen ? "translate-x-0" : "translate-x-full"}`} aria-hidden={!menuOpen}>
+                    <div className="flex items-center justify-between border-b border-white/10 pb-5">
+                        <span className="section-eyebrow">Menu</span>
+                        <button type="button" className="text-[#b9b9b9] hover:text-white" onClick={() => setMenuOpen(false)} aria-label="Fechar menu"><X size={22} /></button>
+                    </div>
+                    <div className="flex flex-col gap-5 py-7 text-sm text-[#b9b9b9]">
+                        {navigation.map((item) => <NavLink key={item.to} to={item.to} end={item.to === "/"} onClick={() => setMenuOpen(false)} className="hover:text-white">{item.label}</NavLink>)}
+                    </div>
+                    <div className="mt-auto border-t border-white/10 pt-6 text-sm text-[#b9b9b9]">
+                        {user ? (
+                            <div className="flex items-center justify-between gap-4"><span>Olá, {user}</span><button className="inline-flex items-center gap-2 hover:text-white" onClick={handleLogout}><LogOut size={15} /> Sair</button></div>
+                        ) : (
+                            <div className="flex flex-col gap-4"><span>Olá, visitante</span><button className="inline-flex items-center gap-2 text-left hover:text-white" onClick={() => openModal("register")}><LockKeyhole size={15} /> Cadastrar</button><button className="inline-flex items-center gap-2 text-left hover:text-white" onClick={() => openModal("login")}><LogIn size={15} /> Entrar</button></div>
+                        )}
+                    </div>
+                </aside>
             </header>
 
             {modalType && (
-                <Modal title={modalType === 'register' ? 'Cadastre-se' : 'Faça seu login'}>
-                    <button className="absolute top-0 right-0 text-white bg-red-800 px-2 pb-1 text-xl" onClick={() => setModalType(null)}>x</button>
-                    {modalType === 'register' ? <Register onType={setModalType} onSuccess={handleSuccess} /> : <Logar onType={setModalType} onSuccess={handleSuccess} />}
+                <Modal title={modalType === "register" ? "Cadastre-se" : "Faça seu login"}>
+                    <button className="absolute right-3 top-3 text-[#b9b9b9] hover:text-white" onClick={() => setModalType(null)} aria-label="Fechar"><X size={20} /></button>
+                    {modalType === "register" ? <Register onType={setModalType} onSuccess={handleSuccess} /> : <Logar onType={setModalType} onSuccess={handleSuccess} />}
                 </Modal>
             )}
-
         </>
-    ) 
-}
+    );
+};
 
-export default Header
+export default Header;

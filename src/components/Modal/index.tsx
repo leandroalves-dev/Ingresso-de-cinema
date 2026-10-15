@@ -9,9 +9,9 @@ interface ModalProps {
 
 const Modal = ({ title, children, className }: ModalProps) => {
     return (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50" style={{ background: "rgba(0,0,0,0.9)" }}>
-            <div className={twMerge("relative border-neutral-900 border p-5 bg-black text-white max-w-[350px] w-full", className)}>
-                <h2 className="text-2xl mb-3 border-b-neutral-900 border-b-1 pb-2 leading-7">{title}</h2>
+        <div className="fixed inset-0 z-[60] flex items-center justify-center overflow-y-auto bg-black/85 p-4 backdrop-blur-sm">
+            <div className={twMerge("relative max-h-[92vh] w-full max-w-[350px] overflow-y-auto rounded-sm border border-white/10 bg-[#101111] p-6 text-white shadow-2xl", className)}>
+                <h2 className="mb-5 border-b border-white/10 pb-3 text-xl font-semibold leading-7">{title}</h2>
                 {children}
             </div>
         </div>

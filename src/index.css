@@ -1,2 +1,191 @@
 @import "tailwindcss";
 
+:root {
+  --cine-bg: #080909;
+  --cine-surface: #101111;
+  --cine-card: #17191a;
+  --cine-border: rgba(255, 255, 255, 0.12);
+  --cine-red: #d50000;
+  --cine-red-bright: #ff252d;
+  --cine-red-glow: rgba(255, 0, 20, 0.3);
+  --cine-cyan: #32dfff;
+  --cine-cyan-glow: rgba(0, 210, 255, 0.22);
+  --cine-burgundy: #26070b;
+  --cine-crimson: #570a13;
+  --cine-teal: #08252b;
+  --cine-text: #f7f7f7;
+  --cine-muted: #b9b9b9;
+  --cine-dim: #818181;
+  --cine-content: 1280px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--cine-bg);
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background: var(--cine-bg);
+  color: var(--cine-text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+a,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--cine-cyan);
+  outline-offset: 3px;
+}
+
+.cine-app-shell {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  background: var(--cine-bg);
+}
+
+.cinematic-atmosphere {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 36% 19% at -2% 13%, rgba(112, 9, 22, 0.66) 0%, rgba(65, 6, 15, 0.46) 35%, transparent 76%),
+    radial-gradient(ellipse 30% 17% at 13% 25%, rgba(165, 16, 32, 0.38) 0%, rgba(87, 10, 19, 0.32) 38%, transparent 78%),
+    radial-gradient(ellipse 42% 21% at -6% 41%, rgba(104, 9, 19, 0.6) 0%, rgba(38, 7, 11, 0.44) 35%, transparent 77%),
+    radial-gradient(ellipse 29% 23% at 12% 58%, rgba(165, 16, 32, 0.42) 0%, rgba(87, 10, 19, 0.31) 38%, transparent 80%),
+    radial-gradient(ellipse 39% 22% at -3% 76%, rgba(112, 9, 22, 0.62) 0%, rgba(38, 7, 11, 0.43) 36%, transparent 78%),
+    radial-gradient(ellipse 31% 17% at 19% 91%, rgba(87, 10, 19, 0.38) 0%, transparent 78%),
+    radial-gradient(ellipse 37% 23% at 103% 15%, rgba(7, 85, 106, 0.5) 0%, rgba(8, 37, 43, 0.4) 36%, transparent 78%),
+    radial-gradient(ellipse 31% 18% at 88% 29%, rgba(8, 85, 106, 0.44) 0%, rgba(6, 45, 55, 0.35) 38%, transparent 79%),
+    radial-gradient(ellipse 43% 22% at 108% 48%, rgba(7, 85, 106, 0.58) 0%, rgba(6, 37, 45, 0.42) 34%, transparent 77%),
+    radial-gradient(ellipse 32% 25% at 91% 64%, rgba(8, 65, 80, 0.47) 0%, rgba(6, 21, 25, 0.36) 38%, transparent 80%),
+    radial-gradient(ellipse 42% 22% at 106% 82%, rgba(7, 85, 106, 0.52) 0%, rgba(6, 37, 45, 0.38) 35%, transparent 78%),
+    linear-gradient(90deg, rgba(38, 7, 11, 0.12), transparent 31%, transparent 69%, rgba(6, 21, 25, 0.12)),
+    var(--cine-bg);
+}
+
+.cinematic-atmosphere::before,
+.cinematic-atmosphere::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+  inset: -12%;
+}
+
+.cinematic-atmosphere::before {
+  opacity: 0.88;
+  filter: blur(42px);
+  background:
+    radial-gradient(ellipse 24% 11% at 5% 16%, rgba(255, 37, 45, 0.22), transparent 72%),
+    radial-gradient(ellipse 32% 14% at 20% 32%, rgba(126, 10, 24, 0.34), transparent 75%),
+    radial-gradient(ellipse 24% 15% at 2% 51%, rgba(255, 37, 45, 0.2), transparent 76%),
+    radial-gradient(ellipse 32% 12% at 21% 67%, rgba(126, 10, 24, 0.32), transparent 76%),
+    radial-gradient(ellipse 25% 15% at 4% 84%, rgba(165, 16, 32, 0.25), transparent 76%),
+    radial-gradient(ellipse 28% 13% at 96% 18%, rgba(50, 223, 255, 0.16), transparent 73%),
+    radial-gradient(ellipse 34% 12% at 80% 35%, rgba(7, 85, 106, 0.36), transparent 76%),
+    radial-gradient(ellipse 24% 16% at 101% 53%, rgba(50, 223, 255, 0.18), transparent 76%),
+    radial-gradient(ellipse 34% 13% at 82% 72%, rgba(7, 85, 106, 0.34), transparent 76%),
+    radial-gradient(ellipse 24% 12% at 98% 89%, rgba(50, 223, 255, 0.16), transparent 75%);
+}
+
+.cinematic-atmosphere::after {
+  opacity: 0.54;
+  filter: blur(76px);
+  background:
+    radial-gradient(ellipse 29% 10% at 0% 29%, rgba(165, 16, 32, 0.38), transparent 74%),
+    radial-gradient(ellipse 22% 18% at 9% 72%, rgba(87, 10, 19, 0.48), transparent 76%),
+    radial-gradient(ellipse 31% 13% at 100% 28%, rgba(7, 85, 106, 0.36), transparent 75%),
+    radial-gradient(ellipse 24% 18% at 94% 76%, rgba(8, 37, 43, 0.54), transparent 76%);
+}
+
+.cinematic-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.cinematic-section::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(ellipse 44% 30% at 0% 22%, rgba(126, 0, 15, 0.12), transparent 70%),
+    radial-gradient(ellipse 42% 32% at 100% 68%, rgba(0, 102, 136, 0.1), transparent 70%);
+}
+
+.cinematic-section::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0.34;
+  filter: blur(28px);
+  background:
+    radial-gradient(ellipse 24% 16% at 2% 48%, rgba(165, 16, 32, 0.16), transparent 75%),
+    radial-gradient(ellipse 25% 18% at 98% 52%, rgba(7, 85, 106, 0.15), transparent 75%);
+}
+
+.neon-divider {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(90deg, var(--cine-red-bright) 0%, rgba(255, 37, 45, 0.25) 46%, rgba(50, 223, 255, 0.3) 56%, var(--cine-cyan) 100%);
+  box-shadow: 0 0 5px rgba(255, 35, 45, 0.7), 0 0 14px rgba(255, 35, 45, 0.25), 0 0 16px var(--cine-cyan-glow);
+}
+
+.neon-divider::after {
+  position: absolute;
+  inset: -5px 0;
+  content: "";
+  opacity: 0.28;
+  filter: blur(6px);
+  background: inherit;
+}
+
+.neon-divider::before {
+  position: absolute;
+  inset: -16px 0;
+  content: "";
+  opacity: 0.22;
+  filter: blur(16px);
+  background: inherit;
+}
+
+.section-eyebrow {
+  color: var(--cine-cyan);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.surface-card {
+  border: 1px solid var(--cine-border);
+  background: linear-gradient(145deg, rgba(23, 25, 26, 0.91), rgba(12, 13, 13, 0.91));
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+

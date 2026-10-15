@@ -3,13 +3,7 @@ import { useEffect, useState } from "react";
 import Carousel from "../Carousel";
 import FilterMonth from "../FilterMonth";
 import { useMovies } from "../../hooks/useMovies";
-import {
-    getAvailableDaysInMonth,
-    getDateForMonth,
-    getFutureMonths,
-    getMoviesForDate,
-    formatMonthKey,
-} from "../../utils/schedule";
+import { getAvailableDaysInMonth, getDateForMonth, getFutureMonths, getMoviesForDate, formatMonthKey } from "../../utils/schedule";
 import { Movie } from "../../types/Movies";
 
 interface DataProps {
@@ -27,7 +21,6 @@ const Data = ({ onFilterMovies }: DataProps) => {
     useEffect(() => {
         const availableDays = getAvailableDaysInMonth(movies, selectedMonth, referenceDate);
         const firstDay = availableDays[0] ?? null;
-
         setDays(availableDays);
         setSelectedDay(firstDay);
 
@@ -48,32 +41,26 @@ const Data = ({ onFilterMovies }: DataProps) => {
     const handleSelectDay = (day: number) => {
         const date = getDateForMonth(selectedMonth, day);
         if (!date) return;
-
         setSelectedDay(day);
         onFilterMovies(getMoviesForDate(movies, date), date);
     };
 
     return (
-        <>
-            <div className="flex justify-between items-center">
-                <h1 className="text-white text-[26px]">Programação</h1>
-                <FilterMonth
-                    months={months}
-                    value={selectedMonth}
-                    onChange={setSelectedMonth}
-                />
+        <div className="relative">
+            <div className="flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-end">
+                <div>
+                    <p className="section-eyebrow mb-2">Agenda de sessões</p>
+                    <h1 className="text-2xl font-semibold tracking-tight text-[#f7f7f7] sm:text-3xl">Programação</h1>
+                </div>
+                <FilterMonth months={months} value={selectedMonth} onChange={setSelectedMonth} />
             </div>
 
             {days.length > 0 ? (
-                <Carousel
-                    days={days}
-                    selectedDay={selectedDay}
-                    onDaySelect={handleSelectDay}
-                />
+                <Carousel days={days} selectedDay={selectedDay} onDaySelect={handleSelectDay} />
             ) : (
-                <p className="my-5 text-white">Não há sessões disponíveis neste mês.</p>
+                <div className="my-8 rounded-sm border border-dashed border-white/15 bg-white/[0.02] p-8 text-center text-sm text-[#b9b9b9]">Não há sessões disponíveis neste mês.</div>
             )}
-        </>
+        </div>
     );
 };
 

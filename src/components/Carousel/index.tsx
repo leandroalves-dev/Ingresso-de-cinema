@@ -58,15 +58,17 @@ const Carousel = ({ days, selectedDay, onDaySelect }: CarouselProps) => {
     }
 
     return (
-        <Slider {...settings} className='bg-[#131313] my-5 mb-18 border-1 border-[#100e0e] p-2'>
+        <Slider {...settings} className='programming-dates my-8 border-y border-white/10 bg-black/20 px-1 py-3'>
             {days.map((day, index) => (
-                <div key={index} className='px-2'>
-                    <div
-                        className={`bg-[#990000] text-center p-5 rounded-[4px] text-white text-[18px] ${active === day ? 'bg-neutral-800' : ''}`}
-                        onClick={() => handleSelectDay(day)}    
+                <div key={`${day}-${index}`} className='px-1.5 sm:px-2'>
+                    <button
+                        type="button"
+                        className={`w-full rounded-sm border px-3 py-3 text-center text-sm font-semibold text-white transition-all duration-200 sm:py-4 ${active === day ? 'border-[#ff252d] bg-[#d50000] shadow-[0_0_14px_rgba(255,37,45,0.32)]' : 'border-white/15 bg-[#17191a] hover:border-[#ff252d]/70 hover:bg-[#241819]'}`}
+                        onClick={() => handleSelectDay(day)}
+                        aria-pressed={active === day}
                     >
-                        <h1>{day}</h1>
-                    </div>
+                        {day}
+                    </button>
                 </div>
             ))}
         </Slider>

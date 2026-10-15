@@ -1,6 +1,9 @@
+import { ArrowUpRight, CalendarDays } from "lucide-react";
 import { Link } from "react-router-dom";
+
 import { useMovies } from "../../hooks/useMovies";
 import Container from "../Container";
+import { Card } from "../ui/card";
 
 const LastNews = () => {
     const { news } = useMovies();
@@ -11,24 +14,35 @@ const LastNews = () => {
     };
 
     return (
-        <div className="p-6 bg-center border-t-1 border-neutral-800" style={{ backgroundImage: "url('/bg.png')" }}>
+        <section className="cinematic-section border-t border-white/[0.08] py-14 sm:py-20" aria-labelledby="latest-news-title">
             <Container>
-                <h1 className="text-white text-[22px]">Últimas notícias</h1>
-                <p className="text-white mb-10">Fique por dentro de tudo que rola no mundo do cinema!</p>
-                
-                <div className="flex flex-wrap gap-5">
-                    {news.map(itens => (
-                        <div key={itens.id} className='flex-1 cursor-pointer min-w-[350px] text-white p-4' style={{ backgroundColor: 'rgba(2, 0, 7, 0.5)'} }>        
-                            <Link to={`/details-news/${itens.id}`}  >
-                            <img src={itens.image} alt={itens.title} className="w-full h-48 object-cover mb-4" />
-                            {itens.title}
-                            <span className="my-3 text-[12px] block">{formatDate(itens.data)}</span>
+                <div className="mb-8 flex items-end justify-between gap-4">
+                    <div>
+                        <p className="section-eyebrow mb-2">Cinesphere journal</p>
+                        <h2 id="latest-news-title" className="text-2xl font-semibold tracking-tight text-[#f7f7f7] sm:text-3xl">Últimas notícias</h2>
+                        <p className="mt-2 max-w-xl text-sm text-[#b9b9b9]">Fique por dentro de tudo que rola no mundo do cinema.</p>
+                    </div>
+                    <span className="hidden h-px max-w-xs flex-1 bg-gradient-to-r from-[#ff252d]/70 to-transparent sm:block" />
+                </div>
+
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+                    {news.map((item) => (
+                        <Card key={item.id} className="group overflow-hidden transition-colors duration-200 hover:border-[#ff252d]/70">
+                            <Link to={`/details-news/${item.id}`} className="block h-full">
+                                <img src={item.image} alt={item.title} className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                                <div className="flex min-h-32 flex-col justify-between gap-5 p-5">
+                                    <h3 className="line-clamp-2 text-sm font-semibold leading-6 text-[#f7f7f7] group-hover:text-white">{item.title}</h3>
+                                    <span className="flex items-center justify-between text-xs text-[#818181]">
+                                        <span className="inline-flex items-center gap-2"><CalendarDays size={14} /> {formatDate(item.data)}</span>
+                                        <ArrowUpRight size={17} className="text-[#ff252d]" />
+                                    </span>
+                                </div>
                             </Link>
-                        </div>
+                        </Card>
                     ))}
                 </div>
             </Container>
-        </div>
+        </section>
     );
 };
 

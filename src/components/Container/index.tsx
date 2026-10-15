@@ -1,11 +1,11 @@
 import { ReactNode } from 'react'
 
-const index = ({ children }:{ children: ReactNode}) => {
+const Container = ({ children }:{ children: ReactNode}) => {
     return (
-        <div className='w-full flex-1 max-w-[1280px] mx-auto p-3'>
+        <div className='mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8'>
             {children}
         </div>
     )
 }
 
-export default index
+export default Container

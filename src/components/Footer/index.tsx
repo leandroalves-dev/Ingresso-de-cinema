@@ -1,49 +1,32 @@
-import Logo from '../../assets/logo.png'
+import { Facebook, Instagram, Youtube } from "lucide-react";
 
-//icons
-import { BsFacebook, BsInstagram, BsYoutube } from 'react-icons/bs'
+import Logo from "../../assets/logo.png";
+import Container from "../Container";
 
-//components
-import Container from '../Container'
+const footerLinks = ["Página inicial", "Sobre a CineSphere", "Programação", "Central de atendimento", "Notícias"];
 
-const Footer = () => {
-    return (
-      <footer className='bg-neutral-800 p-10 flex flex-col items-center'>
-            <Container>
-                <div className='flex flex-col items-center justify-center'>
-                    
-                    <div className='mb-5'>
-                        <img src={Logo} alt='CineSphere - venha curtir essa experiência' className='w-52' />
-                    </div>
-                    
-                    <div>
-                        <ul className='flex flex-row gap-5 text-white mb-3 text-sm max-sm:flex-col max-sm:items-center max-sm:gap-2'>
-                            <li><a href="#">Página inicial</a></li>
-                            <li><a href="#">Sobre a CineSphere</a></li>
-                            <li><a href="#">Programação</a></li>
-                            <li><a href="#">Central de atendimento</a></li>
-                            <li><a href="#">Notícias</a></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <ul className='flex flex-row gap-5 text-white mb-3 text-sm'>
-                            <li className='flex flex-row items-center gap-2'><BsFacebook /> <span>Facebook</span></li>
-                            <li className='flex flex-row items-center gap-2'><BsInstagram /> <span>Instagram</span></li>
-                            <li className='flex flex-row items-center gap-2'><BsYoutube /> <span>Youtube</span></li>
-                        </ul>
-                    </div>        
-
+const Footer = () => (
+    <footer className="relative overflow-hidden border-t border-white/10 bg-[#0b0c0c] py-12">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#ff252d] to-transparent opacity-70 shadow-[0_0_14px_rgba(255,37,45,0.4)]" />
+        <Container>
+            <div className="flex flex-col items-center text-center">
+                <img src={Logo} alt="CineSphere - venha curtir essa experiência" className="mb-7 w-48 sm:w-56" />
+                <nav aria-label="Navegação do rodapé" className="mb-6">
+                    <ul className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs text-[#b9b9b9]">
+                        {footerLinks.map((link) => <li key={link}><a href="#" className="transition-colors hover:text-white">{link}</a></li>)}
+                    </ul>
+                </nav>
+                <ul className="mb-8 flex flex-wrap justify-center gap-5 text-xs text-[#b9b9b9]">
+                    <li><a href="#" className="inline-flex items-center gap-2 hover:text-white"><Facebook size={14} /> Facebook</a></li>
+                    <li><a href="#" className="inline-flex items-center gap-2 hover:text-white"><Instagram size={14} /> Instagram</a></li>
+                    <li><a href="#" className="inline-flex items-center gap-2 hover:text-white"><Youtube size={14} /> Youtube</a></li>
+                </ul>
+                <div className="w-full border-t border-white/10 pt-5 text-xs text-[#818181]">
+                    <address className="not-italic">&copy; Copyright - Todos os direitos reservados - 2025</address>
                 </div>
+            </div>
+        </Container>
+    </footer>
+);
 
-                <div className='font-normal w-full flex items-center justify-center pt-3 text-white border-t-1 border-t-neutral-700 text-sm'>
-                    <address className='not-italic'>&copy; Copyright - Todos os direitos reservados - 2025</address>
-                </div>
-
-            </Container>
-      </footer>
-    )
-  }
-  
-  export default Footer
-  
+export default Footer;
