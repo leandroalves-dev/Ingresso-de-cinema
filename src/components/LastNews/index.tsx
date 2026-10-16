@@ -1,9 +1,10 @@
-import { ArrowUpRight, CalendarDays } from "lucide-react";
+import { ArrowUpRight, CalendarDays, Newspaper } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { useMovies } from "../../hooks/useMovies";
 import Container from "../Container";
 import { Card } from "../ui/card";
+import "./last-news.css";
 
 const LastNews = () => {
     const { news, loading } = useMovies();
@@ -16,28 +17,37 @@ const LastNews = () => {
     };
 
     return (
-        <section className="latest-news-section cinematic-section border-t border-white/[0.08] py-14 sm:py-20" aria-labelledby="latest-news-title">
+        <section className="news-journal-section cinematic-section" aria-labelledby="latest-news-title">
             <Container>
-                <div className="latest-news-header mb-8 flex items-end justify-between gap-4">
-                    <div>
-                        <p className="section-eyebrow mb-2">Cinesphere journal</p>
-                        <h2 id="latest-news-title" className="text-2xl font-semibold tracking-tight text-[#f7f7f7] sm:text-3xl">Últimas notícias</h2>
-                        <p className="mt-2 max-w-xl text-sm text-[#b9b9b9]">Fique por dentro de tudo que rola no mundo do cinema.</p>
+                <header className="news-journal-header">
+                    <div className="news-journal-heading">
+                        <p className="news-journal-eyebrow"><Newspaper size={14} aria-hidden="true" /> CineSphere Journal</p>
+                        <h2 id="latest-news-title">Últimas notícias</h2>
+                        <p>Fique por dentro de tudo que rola no mundo do cinema.</p>
                     </div>
-                    <span className="latest-news-divider hidden h-px max-w-xs flex-1 bg-gradient-to-r from-[#ff252d]/70 to-transparent sm:block" />
-                </div>
+                    <div className="news-journal-heading-mark" aria-hidden="true">
+                        <span>NEWS</span>
+                        <i />
+                    </div>
+                </header>
 
-                <div className="latest-news-grid grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-                    {news.map((item) => (
-                        <Card key={item.id} className="latest-news-card group overflow-hidden">
-                            <Link to={`/details-news/${item.id}`} className="block h-full">
-                                <img src={item.image} alt={item.title} loading="lazy" decoding="async" className="latest-news-image aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
-                                <div className="latest-news-content flex min-h-32 flex-col justify-between gap-5 p-5">
-                                    <h3 className="latest-news-headline line-clamp-2 text-sm font-semibold leading-6 text-[#f7f7f7] group-hover:text-white">{item.title}</h3>
-                                    <span className="latest-news-date flex items-center justify-between text-xs text-[#818181]">
-                                        <span className="inline-flex items-center gap-2"><CalendarDays size={14} /> {formatDate(item.data)}</span>
-                                        <ArrowUpRight size={17} className="text-[#ff252d]" />
-                                    </span>
+                <div className="news-journal-grid">
+                    {news.map((item, index) => (
+                        <Card key={item.id} className="news-journal-card group">
+                            <Link to={`/details-news/${item.id}`} className="news-journal-link">
+                                <div className="news-journal-image-wrap">
+                                    <img src={item.image} alt={item.title} loading="lazy" decoding="async" className="news-journal-image" />
+                                    <span className="news-journal-image-shade" aria-hidden="true" />
+                                    <span className="news-journal-card-index">{String(index + 1).padStart(2, "0")}</span>
+                                    <span className="news-journal-read-label">Ler notícia <ArrowUpRight size={14} aria-hidden="true" /></span>
+                                </div>
+                                <div className="news-journal-content">
+                                    <span className="news-journal-kicker">Em foco</span>
+                                    <h3>{item.title}</h3>
+                                    <div className="news-journal-meta">
+                                        <span><CalendarDays size={13} aria-hidden="true" /> {formatDate(item.data)}</span>
+                                        <ArrowUpRight size={17} aria-hidden="true" />
+                                    </div>
                                 </div>
                             </Link>
                         </Card>
