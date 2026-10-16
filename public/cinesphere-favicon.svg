@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">CineSphere</title>
+  <desc id="desc">Ícone cinematográfico do CineSphere</desc>
+  <defs>
+    <linearGradient id="surface" x1="8" y1="7" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2b0b12"/>
+      <stop offset="0.52" stop-color="#111718"/>
+      <stop offset="1" stop-color="#062c35"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="12" y1="10" x2="53" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ff5960"/>
+      <stop offset="0.5" stop-color="#ff252d"/>
+      <stop offset="1" stop-color="#32dfff"/>
+    </linearGradient>
+    <radialGradient id="lens" cx="35%" cy="28%" r="78%">
+      <stop stop-color="#ffffff" stop-opacity="0.8"/>
+      <stop offset="0.08" stop-color="#32dfff" stop-opacity="0.95"/>
+      <stop offset="0.42" stop-color="#0a5260"/>
+      <stop offset="1" stop-color="#071011"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="#080909"/>
+  <circle cx="32" cy="32" r="24" fill="url(#surface)" stroke="url(#ring)" stroke-width="2.5" filter="url(#glow)"/>
+  <circle cx="32" cy="32" r="14" fill="url(#lens)" stroke="#b5f5fa" stroke-opacity="0.78" stroke-width="1.5"/>
+  <circle cx="32" cy="32" r="5.5" fill="#080909" stroke="#ff5960" stroke-width="1.7"/>
+  <circle cx="29.8" cy="29.6" r="1.7" fill="#ffffff"/>
+  <path d="M32 8v7M56 32h-7M32 56v-7M8 32h7" stroke="#f7f7f7" stroke-opacity="0.8" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="m15 15 5 5M49 49l-5-5M49 15l-5 5M15 49l5-5" stroke="#ff5960" stroke-opacity="0.76" stroke-width="1.3" stroke-linecap="round"/>
+</svg>
